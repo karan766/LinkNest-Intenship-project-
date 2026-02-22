@@ -38,12 +38,17 @@ export default defineConfig(({ command, mode }) => {
 				output: {
 					manualChunks: {
 						vendor: ['react', 'react-dom'],
-						chakra: ['@chakra-ui/react', '@emotion/react', '@emotion/styled'],
+						chakra: ['@chakra-ui/react', '@emotion/react', '@emotion/styled', 'framer-motion'],
 						router: ['react-router-dom'],
 						icons: ['react-icons', '@chakra-ui/icons'],
 						socket: ['socket.io-client'],
 						utils: ['date-fns', 'recoil'],
 					}
+				},
+				// Handle external dependencies that might cause issues
+				external: (id) => {
+					// Don't externalize any dependencies in production
+					return false;
 				}
 			}
 		},
@@ -62,6 +67,7 @@ export default defineConfig(({ command, mode }) => {
 				'react',
 				'react-dom',
 				'@chakra-ui/react',
+				'@chakra-ui/theme-tools',
 				'@emotion/react',
 				'@emotion/styled',
 				'framer-motion',
@@ -69,6 +75,8 @@ export default defineConfig(({ command, mode }) => {
 				'socket.io-client',
 				'recoil'
 			],
+			// Force pre-bundling of problematic dependencies
+			force: isProduction
 		},
 	};
 });

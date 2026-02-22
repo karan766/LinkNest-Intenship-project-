@@ -16,7 +16,9 @@ export const SocketContextProvider = ({ children }) => {
 	const user = useRecoilValue(userAtom);
 
 	useEffect(() => {
-		const socketUrl = config.isProduction ? config.socketUrl : "/";
+		const socketUrl = config.isProduction 
+			? (window.location.origin || config.socketUrl) 
+			: config.socketUrl;
 		const socket = io(socketUrl, {
 			query: {
 				userId: user?._id,

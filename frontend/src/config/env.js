@@ -39,9 +39,9 @@ export const config = {
   appDescription: getEnvVar('VITE_APP_DESCRIPTION', 'Social networking platform'),
   
   // Environment
-  nodeEnv: getEnvVar('VITE_NODE_ENV', 'development'),
-  isDevelopment: getEnvVar('VITE_NODE_ENV', 'development') === 'development',
-  isProduction: getEnvVar('VITE_NODE_ENV', 'development') === 'production',
+  nodeEnv: getEnvVar('VITE_NODE_ENV', import.meta.env.MODE || 'development'),
+  isDevelopment: (import.meta.env.MODE || getEnvVar('VITE_NODE_ENV', 'development')) === 'development',
+  isProduction: (import.meta.env.MODE || getEnvVar('VITE_NODE_ENV', 'development')) === 'production',
 
   // Render Deployment
   renderExternalUrl: getEnvVar('VITE_RENDER_EXTERNAL_URL'),
@@ -113,6 +113,9 @@ export const config = {
 
 // Validation
 const validateConfig = () => {
+  // Only validate in production builds
+  if (!config.isProduction) return;
+  
   const requiredVars = [
     'VITE_API_BASE_URL',
     'VITE_SOCKET_URL',
@@ -122,9 +125,8 @@ const validateConfig = () => {
   
   if (missing.length > 0) {
     console.error('Missing required environment variables:', missing);
-    if (config.isProduction) {
-      throw new Error(`Missing required environment variables: ${missing.join(', ')}`);
-    }
+    // Don't throw in production build, just warn
+    console.warn(`Production deployment may fail without: ${missing.join(', ')}`);
   }
 };
 

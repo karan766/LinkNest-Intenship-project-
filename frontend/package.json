@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite --mode development",
     "build": "vite build --mode production",
+    "build:verify": "npm run build && node scripts/verify-build.js",
     "build:dev": "vite build --mode development",
     "build:staging": "vite build --mode staging",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
@@ -52,7 +53,7 @@
     "vite-bundle-analyzer": "^0.7.0"
   },
   "engines": {
-    "node": ">=16.0.0",
+    "node": ">=18.0.0",
     "npm": ">=8.0.0"
   },
   "browserslist": {
