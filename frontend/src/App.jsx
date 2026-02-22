@@ -19,8 +19,11 @@ function App() {
 	const user = useRecoilValue(userAtom);
 	const { pathname } = useLocation();
 	return (
-		<Box position={"relative"} w='full'>
-			<Container maxW={pathname === "/" ? { base: "620px", md: "900px" } : "620px"}>
+		<Box position={"relative"} w='full' minH="100vh">
+			<Container 
+				maxW={pathname === "/" ? { base: "100%", sm: "620px", md: "900px", lg: "1200px" } : { base: "100%", sm: "620px", md: "800px" }}
+				px={{ base: 4, sm: 6, md: 8 }}
+			>
 				<Header />
 				<Routes>
 					<Route path='/' element={user ? <HomePage /> : <Navigate to='/auth' />} />

@@ -90,8 +90,8 @@ const Post = ({ post, postedBy }) => {
         className="hover-lift"
         bg={cardBg}
         backdropFilter="blur(20px)"
-        borderRadius="2xl"
-        p={6}
+        borderRadius={{ base: "xl", md: "2xl" }}
+        p={{ base: 4, md: 6 }}
         border="1px solid"
         borderColor={borderColor}
         boxShadow="0 8px 32px rgba(0, 0, 0, 0.1)"
@@ -101,11 +101,11 @@ const Post = ({ post, postedBy }) => {
           transform: "translateY(-2px)",
         }}
       >
-        <Flex gap={4}>
+        <Flex gap={{ base: 3, md: 4 }} direction={{ base: "column", sm: "row" }}>
           {/* Left Column - Avatar and Thread Line */}
-          <VStack spacing={2} align="center">
+          <VStack spacing={2} align="center" minW={{ base: "auto", sm: "60px" }}>
             <Avatar
-              size="md"
+              size={{ base: "sm", md: "md" }}
               name={user.name}
               src={user?.profilePic}
               onClick={(e) => {
@@ -116,13 +116,23 @@ const Post = ({ post, postedBy }) => {
               className="hover-glow"
             />
             
-            {/* Thread Line */}
-            <Box w="2px" h="full" bg={threadLineColor} opacity={0.4} />
+            {/* Thread Line - Hidden on mobile when stacked */}
+            <Box 
+              w="2px" 
+              h="full" 
+              bg={threadLineColor} 
+              opacity={0.4}
+              display={{ base: "none", sm: "block" }}
+            />
             
             {/* Reply Avatars */}
-            <Box position="relative" w="full">
+            <Box 
+              position="relative" 
+              w="full"
+              display={{ base: "none", sm: "block" }}
+            >
               {post.replies.length === 0 && (
-                <Text textAlign="center" fontSize="lg">
+                <Text textAlign="center" fontSize={{ base: "md", md: "lg" }}>
                   🤔
                 </Text>
               )}
@@ -143,13 +153,13 @@ const Post = ({ post, postedBy }) => {
           </VStack>
 
           {/* Right Column - Content */}
-          <VStack flex={1} align="stretch" spacing={3}>
+          <VStack flex={1} align="stretch" spacing={{ base: 2, md: 3 }}>
             {/* Header */}
-            <Flex justify="space-between" align="center">
-              <HStack spacing={2}>
+            <Flex justify="space-between" align="center" flexWrap="wrap" gap={2}>
+              <HStack spacing={2} flex={1} minW={0}>
                 <Text
                   fontWeight="bold"
-                  fontSize="md"
+                  fontSize={{ base: "sm", md: "md" }}
                   color={textColor}
                   onClick={(e) => {
                     e.preventDefault();
@@ -158,21 +168,22 @@ const Post = ({ post, postedBy }) => {
                   cursor="pointer"
                   _hover={{ color: "brand.500" }}
                   transition="colors 0.2s"
+                  isTruncated
                 >
                   {user?.username}
                 </Text>
-                <Image src="/verified.png" w={4} h={4} />
+                <Image src="/verified.png" w={4} h={4} flexShrink={0} />
               </HStack>
               
-              <HStack spacing={2}>
-                <Text fontSize="xs" color="gray.500">
+              <HStack spacing={2} flexShrink={0}>
+                <Text fontSize={{ base: "2xs", md: "xs" }} color="gray.500">
                   {formatDistanceToNow(new Date(post.createdAt))} ago
                 </Text>
                 
                 {currentUser?._id === user._id && (
                   <Tooltip label="Delete post">
                     <IconButton
-                      size="sm"
+                      size={{ base: "xs", md: "sm" }}
                       variant="ghost"
                       icon={<FiTrash2 />}
                       onClick={handleDeleteClick}
@@ -185,37 +196,77 @@ const Post = ({ post, postedBy }) => {
             </Flex>
 
             {/* Post Content */}
-            <Text fontSize="sm" lineHeight="1.6" color={textColor}>
+            <Text 
+              fontSize={{ base: "sm", md: "md" }} 
+              lineHeight="1.6" 
+              color={textColor}
+              wordBreak="break-word"
+            >
               {post.text}
             </Text>
 
             {/* Post Image */}
             {post.img && (
               <Box
-                borderRadius="xl"
+                borderRadius={{ base: "lg", md: "xl" }}
                 overflow="hidden"
                 border="1px solid"
                 borderColor={borderColor}
                 className="hover-glow"
+                maxH={{ base: "300px", md: "400px" }}
               >
-                <Image src={post.img} w="full" objectFit="cover" />
+                <Image 
+                  src={post.img} 
+                  w="full" 
+                  h="full"
+                  objectFit="cover"
+                  loading="lazy"
+                />
               </Box>
             )}
 
             {/* Actions */}
-            <Box pt={2}>
+            <Box pt={{ base: 1, md: 2 }}>
               <Actions post={post} />
             </Box>
 
-            {/* Reply Count */}
-            {post.replies.length > 0 && (
-              <HStack spacing={2} color="gray.500" fontSize="sm">
-                <FiMessageCircle size={16} />
-                <Text>
-                  {post.replies.length} {post.replies.length === 1 ? 'reply' : 'replies'}
-                </Text>
+            {/* Reply Count and Mobile Reply Avatars */}
+            <Flex 
+              justify="space-between" 
+              align="center"
+              flexWrap="wrap"
+              gap={2}
+            >
+              {post.replies.length > 0 && (
+                <HStack spacing={2} color="gray.500" fontSize={{ base: "xs", md: "sm" }}>
+                  <FiMessageCircle size={16} />
+                  <Text>
+                    {post.replies.length} {post.replies.length === 1 ? 'reply' : 'replies'}
+                  </Text>
+                </HStack>
+              )}
+              
+              {/* Mobile Reply Avatars */}
+              <HStack 
+                spacing={-2} 
+                display={{ base: "flex", sm: "none" }}
+                flexShrink={0}
+              >
+                {post.replies.slice(0, 3).map((reply, index) => (
+                  <Avatar
+                    key={index}
+                    size="xs"
+                    src={reply.userProfilePic}
+                    border="2px solid white"
+                    className="hover-lift"
+                    zIndex={3 - index}
+                  />
+                ))}
+                {post.replies.length === 0 && (
+                  <Text fontSize="sm">🤔</Text>
+                )}
               </HStack>
-            )}
+            </Flex>
           </VStack>
         </Flex>
       </Box>

@@ -41,23 +41,27 @@ const HomePage = () => {
 
 	return (
 		<Box className="animate-fade-in" minH="100vh">
-			<Flex gap={8} alignItems="flex-start">
+			<Flex 
+				gap={{ base: 4, md: 8 }} 
+				alignItems="flex-start"
+				direction={{ base: "column", lg: "row" }}
+			>
 				{/* Main Feed */}
-				<Box flex={70}>
+				<Box flex={{ base: "1", lg: "70" }} w="full">
 					{/* Feed Header */}
 					<Box 
 						bg={cardBg}
 						backdropFilter="blur(20px)"
 						borderRadius="2xl"
-						p={6}
+						p={{ base: 4, md: 6 }}
 						border="1px solid"
 						borderColor={borderColor}
 						boxShadow="0 8px 32px rgba(0, 0, 0, 0.1)"
 						mb={6}
 					>
 						<Flex align="center" gap={3}>
-							<Icon as={FiHome} size={24} color="brand.500" />
-							<Text fontSize="2xl" fontWeight="bold" color="brand.500">
+							<Icon as={FiHome} size={{ base: 20, md: 24 }} color="brand.500" />
+							<Text fontSize={{ base: "xl", md: "2xl" }} fontWeight="bold" color="brand.500">
 								Your Feed
 							</Text>
 						</Flex>
@@ -79,7 +83,7 @@ const HomePage = () => {
 							bg={cardBg}
 							backdropFilter="blur(20px)"
 							borderRadius="2xl"
-							p={16}
+							p={{ base: 8, md: 16 }}
 							border="1px solid"
 							borderColor={borderColor}
 							boxShadow="0 8px 32px rgba(0, 0, 0, 0.1)"
@@ -87,12 +91,12 @@ const HomePage = () => {
 							className="animate-scale-in"
 						>
 							<VStack spacing={6}>
-								<Icon as={FiUsers} size={64} color="gray.400" />
+								<Icon as={FiUsers} size={{ base: 48, md: 64 }} color="gray.400" />
 								<VStack spacing={2}>
-									<Text fontSize="xl" fontWeight="semibold" color={secondaryTextColor}>
+									<Text fontSize={{ base: "lg", md: "xl" }} fontWeight="semibold" color={secondaryTextColor}>
 										Your feed is empty
 									</Text>
-									<Text color="gray.400" maxW="md">
+									<Text color="gray.400" maxW="md" fontSize={{ base: "sm", md: "md" }}>
 										Start following users or create your first post to see content in your feed
 									</Text>
 								</VStack>
@@ -118,9 +122,10 @@ const HomePage = () => {
 
 				{/* Sidebar */}
 				<Box
-					flex={30}
-					display={{ base: "none", md: "block" }}
-					position="sticky"
+					flex={{ base: "1", lg: "30" }}
+					w="full"
+					display={{ base: "block", lg: "block" }}
+					position={{ base: "static", lg: "sticky" }}
 					top="120px"
 				>
 					<VStack spacing={6} align="stretch">
@@ -134,7 +139,7 @@ const HomePage = () => {
 							bg={cardBg}
 							backdropFilter="blur(20px)"
 							borderRadius="2xl"
-							p={6}
+							p={{ base: 4, md: 6 }}
 							border="1px solid"
 							borderColor={borderColor}
 							boxShadow="0 8px 32px rgba(0, 0, 0, 0.1)"
@@ -142,17 +147,17 @@ const HomePage = () => {
 							style={{ animationDelay: "0.3s" }}
 						>
 							<VStack spacing={4} align="stretch">
-								<Text fontSize="lg" fontWeight="semibold" color="brand.500">
+								<Text fontSize={{ base: "md", md: "lg" }} fontWeight="semibold" color="brand.500">
 									Quick Stats
 								</Text>
 								<VStack spacing={2} align="stretch">
 									<Flex justify="space-between">
-										<Text color={secondaryTextColor}>Posts in feed</Text>
-										<Text fontWeight="semibold" color={textColor}>{posts.length}</Text>
+										<Text color={secondaryTextColor} fontSize={{ base: "sm", md: "md" }}>Posts in feed</Text>
+										<Text fontWeight="semibold" color={textColor} fontSize={{ base: "sm", md: "md" }}>{posts.length}</Text>
 									</Flex>
 									<Flex justify="space-between">
-										<Text color={secondaryTextColor}>Status</Text>
-										<Text fontWeight="semibold" color="green.500">Active</Text>
+										<Text color={secondaryTextColor} fontSize={{ base: "sm", md: "md" }}>Status</Text>
+										<Text fontWeight="semibold" color="green.500" fontSize={{ base: "sm", md: "md" }}>Active</Text>
 									</Flex>
 								</VStack>
 							</VStack>
@@ -163,7 +168,7 @@ const HomePage = () => {
 							bg={cardBg}
 							backdropFilter="blur(20px)"
 							borderRadius="2xl"
-							p={6}
+							p={{ base: 4, md: 6 }}
 							border="1px solid"
 							borderColor={borderColor}
 							boxShadow="0 8px 32px rgba(0, 0, 0, 0.1)"
@@ -171,10 +176,10 @@ const HomePage = () => {
 							style={{ animationDelay: "0.4s" }}
 						>
 							<VStack spacing={3} align="stretch">
-								<Text fontSize="lg" fontWeight="semibold" color="brand.500">
+								<Text fontSize={{ base: "md", md: "lg" }} fontWeight="semibold" color="brand.500">
 									💡 Tips
 								</Text>
-								<VStack spacing={2} align="start" fontSize="sm" color={secondaryTextColor}>
+								<VStack spacing={2} align="start" fontSize={{ base: "xs", md: "sm" }} color={secondaryTextColor}>
 									<Text>• Follow more users to see more content</Text>
 									<Text>• Like and comment to engage with the community</Text>
 									<Text>• Share your thoughts by creating posts</Text>

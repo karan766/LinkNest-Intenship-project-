@@ -73,21 +73,21 @@ export default function SignupCard() {
   const isFormValid = inputs.name && inputs.username && inputs.email && inputs.password;
 
   return (
-    <VStack spacing={8} align="center">
+    <VStack spacing={{ base: 6, md: 8 }} align="center">
       <VStack align="center" spacing={4}>
-        <Text fontSize="4xl" fontWeight="bold" color="brand.500">
+        <Text fontSize={{ base: "3xl", md: "4xl" }} fontWeight="bold" color="brand.500">
           LinkNest
         </Text>
-        <Heading fontSize="2xl" textAlign="center" color="brand.400">
+        <Heading fontSize={{ base: "xl", md: "2xl" }} textAlign="center" color="brand.400">
           Join LinkNest
         </Heading>
-        <Text fontSize="md" color={secondaryTextColor} textAlign="center">
+        <Text fontSize={{ base: "sm", md: "md" }} color={secondaryTextColor} textAlign="center">
           Create your account and start connecting
         </Text>
       </VStack>
       
       <Stack spacing={6} w="full">
-        <HStack spacing={4}>
+        <Stack spacing={4} direction={{ base: "column", md: "row" }}>
           <FormControl isRequired>
             <FormLabel fontSize="sm" fontWeight="semibold" color={secondaryTextColor}>
               Full Name
@@ -104,6 +104,7 @@ export default function SignupCard() {
               borderColor={borderColor}
               borderRadius="xl"
               color={textColor}
+              size={{ base: "md", md: "lg" }}
               _focus={{
                 borderColor: "brand.500",
                 boxShadow: "0 0 0 1px var(--chakra-colors-brand-500)",
@@ -127,13 +128,14 @@ export default function SignupCard() {
               borderColor={borderColor}
               borderRadius="xl"
               color={textColor}
+              size={{ base: "md", md: "lg" }}
               _focus={{
                 borderColor: "brand.500",
                 boxShadow: "0 0 0 1px var(--chakra-colors-brand-500)",
               }}
             />
           </FormControl>
-        </HStack>
+        </Stack>
         
         <FormControl isRequired>
           <FormLabel fontSize="sm" fontWeight="semibold" color={secondaryTextColor}>
@@ -151,6 +153,7 @@ export default function SignupCard() {
             borderColor={borderColor}
             borderRadius="xl"
             color={textColor}
+            size={{ base: "md", md: "lg" }}
             _focus={{
               borderColor: "brand.500",
               boxShadow: "0 0 0 1px var(--chakra-colors-brand-500)",
@@ -175,6 +178,7 @@ export default function SignupCard() {
               borderColor={borderColor}
               borderRadius="xl"
               color={textColor}
+              size={{ base: "md", md: "lg" }}
               _focus={{
                 borderColor: "brand.500",
                 boxShadow: "0 0 0 1px var(--chakra-colors-brand-500)",
@@ -200,7 +204,7 @@ export default function SignupCard() {
         
         <Stack spacing={6} pt={2}>
           <Button
-            size="lg"
+            size={{ base: "md", md: "lg" }}
             onClick={handleSignup}
             isLoading={loading}
             loadingText="Creating account..."
@@ -215,12 +219,13 @@ export default function SignupCard() {
               cursor: "not-allowed"
             }}
             borderRadius="xl"
-            h={12}
+            h={{ base: 12, md: 14 }}
+            fontSize={{ base: "md", md: "lg" }}
           >
             Create Account
           </Button>
           
-          <Text align="center" fontSize="sm" color={secondaryTextColor}>
+          <Text align="center" fontSize={{ base: "xs", md: "sm" }} color={secondaryTextColor}>
             Already have an account?{" "}
             <Link 
               color="brand.500"

@@ -53,9 +53,9 @@ const Header = () => {
     <Flex 
       justifyContent="space-between" 
       alignItems="center"
-      mt={6} 
-      mb={8}
-      px={4}
+      mt={{ base: 4, md: 6 }}
+      mb={{ base: 6, md: 8 }}
+      px={{ base: 2, sm: 4 }}
       py={3}
       bg={headerBg}
       backdropFilter="blur(20px)"
@@ -67,12 +67,14 @@ const Header = () => {
       top={4}
       zIndex={100}
       className="animate-fade-in"
+      flexWrap={{ base: "wrap", md: "nowrap" }}
+      gap={{ base: 2, md: 0 }}
     >
       {user && (
         <Link as={RouterLink} to="/" style={{ textDecoration: 'none' }}>
           <Box 
             fontWeight="bold" 
-            fontSize="3xl" 
+            fontSize={{ base: "2xl", sm: "3xl" }}
             bgGradient="linear(135deg, brand.500, brand.700)"
             bgClip="text"
             _hover={{
@@ -97,16 +99,16 @@ const Header = () => {
       )}
 
       {user && (
-        <Flex alignItems="center" gap={3}>
+        <Flex alignItems="center" gap={{ base: 2, md: 3 }} flexWrap="wrap">
           <Tooltip label="Profile" placement="bottom">
             <Link as={RouterLink} to={`/${user.username}`}>
               <Box 
                 bg={iconBg}
                 backdropFilter="blur(10px)"
                 borderRadius="full"
-                p={3}
-                w={12}
-                h={12}
+                p={{ base: 2, md: 3 }}
+                w={{ base: 10, md: 12 }}
+                h={{ base: 10, md: 12 }}
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
@@ -118,9 +120,9 @@ const Header = () => {
                 }}
               >
                 {user.profilePic ? (
-                  <Avatar size="sm" src={user.profilePic} name={user.name} />
+                  <Avatar size={{ base: "xs", md: "sm" }} src={user.profilePic} name={user.name} />
                 ) : (
-                  <RxAvatar size={24} />
+                  <RxAvatar size={{ base: 20, md: 24 }} />
                 )}
               </Box>
             </Link>
@@ -133,9 +135,9 @@ const Header = () => {
                   bg={iconBg}
                   backdropFilter="blur(10px)"
                   borderRadius="full"
-                  p={3}
-                  w={12}
-                  h={12}
+                  p={{ base: 2, md: 3 }}
+                  w={{ base: 10, md: 12 }}
+                  h={{ base: 10, md: 12 }}
                   display="flex"
                   alignItems="center"
                   justifyContent="center"
@@ -173,16 +175,16 @@ const Header = () => {
             </Box>
           </Tooltip>
 
-          <Tooltip label="Friends" placement="bottom">
+          <Tooltip label="Friends" placement="bottom" display={{ base: "none", sm: "block" }}>
             <Link as={RouterLink} to="/followers">
               <Box 
                 bg={iconBg}
                 backdropFilter="blur(10px)"
                 borderRadius="full"
-                p={3}
-                w={12}
-                h={12}
-                display="flex"
+                p={{ base: 2, md: 3 }}
+                w={{ base: 10, md: 12 }}
+                h={{ base: 10, md: 12 }}
+                display={{ base: "none", sm: "flex" }}
                 alignItems="center"
                 justifyContent="center"
                 transition="all 0.3s"
@@ -192,7 +194,7 @@ const Header = () => {
                   boxShadow: "0 8px 25px rgba(0, 0, 0, 0.15)",
                 }}
               >
-                <FaUserFriends size={22} />
+                <FaUserFriends size={{ base: 18, md: 22 }} />
               </Box>
             </Link>
           </Tooltip>
@@ -203,9 +205,9 @@ const Header = () => {
                 bg={iconBg}
                 backdropFilter="blur(10px)"
                 borderRadius="full"
-                p={3}
-                w={12}
-                h={12}
+                p={{ base: 2, md: 3 }}
+                w={{ base: 10, md: 12 }}
+                h={{ base: 10, md: 12 }}
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
@@ -216,21 +218,21 @@ const Header = () => {
                   boxShadow: "0 8px 25px rgba(0, 0, 0, 0.15)",
                 }}
               >
-                <BsFillChatQuoteFill size={20} />
+                <BsFillChatQuoteFill size={{ base: 16, md: 20 }} />
               </Box>
             </Link>
           </Tooltip>
 
-          <Tooltip label="Settings" placement="bottom">
+          <Tooltip label="Settings" placement="bottom" display={{ base: "none", md: "block" }}>
             <Link as={RouterLink} to="/settings">
               <Box 
                 bg={iconBg}
                 backdropFilter="blur(10px)"
                 borderRadius="full"
-                p={3}
-                w={12}
-                h={12}
-                display="flex"
+                p={{ base: 2, md: 3 }}
+                w={{ base: 10, md: 12 }}
+                h={{ base: 10, md: 12 }}
+                display={{ base: "none", md: "flex" }}
                 alignItems="center"
                 justifyContent="center"
                 transition="all 0.3s"
@@ -240,14 +242,14 @@ const Header = () => {
                   boxShadow: "0 8px 25px rgba(0, 0, 0, 0.15)",
                 }}
               >
-                <MdOutlineSettings size={22} />
+                <MdOutlineSettings size={{ base: 18, md: 22 }} />
               </Box>
             </Link>
           </Tooltip>
 
           <Tooltip label="Logout" placement="bottom">
             <Button
-              size="sm"
+              size={{ base: "sm", md: "sm" }}
               onClick={logout}
               bg="red.500"
               color="white"
@@ -259,8 +261,10 @@ const Header = () => {
               borderRadius="xl"
               boxShadow="0 4px 15px rgba(239, 68, 68, 0.3)"
               transition="all 0.3s"
+              fontSize={{ base: "xs", md: "sm" }}
+              px={{ base: 3, md: 4 }}
             >
-              Logout
+              <Text display={{ base: "none", sm: "block" }}>Logout</Text>
             </Button>
           </Tooltip>
         </Flex>
