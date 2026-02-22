@@ -3,8 +3,8 @@ services:
     name: linknest-app
     env: node
     plan: free
-    buildCommand: npm run build
-    startCommand: npm start
+    buildCommand: bash build.sh
+    startCommand: npm start --prefix backend
     healthCheckPath: /health
     envVars:
       # Core Environment
