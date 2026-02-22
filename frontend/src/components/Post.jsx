@@ -27,7 +27,21 @@ const Post = ({ post, postedBy }) => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await fetch("/api/users/profile/" + postedBy);
+        // Handle both object and string postedBy
+        let userIdentifier;
+        if (typeof postedBy === 'object' && postedBy !== null) {
+          // If postedBy is already a populated user object, use it directly
+          setUser(postedBy);
+          return;
+        } else if (typeof postedBy === 'string') {
+          // If postedBy is a string (user ID), fetch the user
+          userIdentifier = postedBy;
+        } else {
+          console.error('Invalid postedBy format:', postedBy);
+          return;
+        }
+
+        const res = await fetch("/api/users/profile/" + userIdentifier);
         const data = await res.json();
         if (data.error) {
           showToast("Error", data.error, "error");

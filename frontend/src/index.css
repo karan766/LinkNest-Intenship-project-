@@ -261,37 +261,19 @@ body {
   box-shadow: var(--shadow-soft);
 }
 
-/* Enhanced Scrollbar - Thin & Subtle but Functional */
+/* Hide all scrollbars - Keep functionality but remove visual scrollbars */
 ::-webkit-scrollbar {
-  width: 6px; /* Slightly thicker for better usability */
+  display: none; /* Hide scrollbar for Webkit browsers */
 }
 
-::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.05); /* More visible track */
-  border-radius: 8px;
+/* Firefox scrollbar hiding */
+* {
+  scrollbar-width: none; /* Firefox */
 }
 
-::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2); /* More visible but still subtle */
-  border-radius: 8px;
-  border: none;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.35); /* More noticeable on hover */
-}
-
-/* Dark mode scrollbar - Thin & Subtle but Functional */
-[data-theme="dark"] ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2); /* More visible for dark mode */
-}
-
-[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.35); /* More noticeable on hover */
-}
-
-[data-theme="dark"] ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05); /* More visible track */
+/* Internet Explorer scrollbar hiding */
+* {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
 }
 
 /* Hide scrollbars on desktop for cleaner look */
@@ -306,34 +288,17 @@ body {
   }
 }
 
-/* Ensure scrollable containers work properly */
+/* Ensure scrollable containers work properly - Hidden scrollbars but functional */
 .scrollable-container,
 .search-results {
   overflow-y: auto !important;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.2) rgba(0, 0, 0, 0.05);
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
 }
 
 .scrollable-container::-webkit-scrollbar,
 .search-results::-webkit-scrollbar {
-  width: 6px !important;
-}
-
-.scrollable-container::-webkit-scrollbar-track,
-.search-results::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.05) !important;
-  border-radius: 8px;
-}
-
-.scrollable-container::-webkit-scrollbar-thumb,
-.search-results::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2) !important;
-  border-radius: 8px;
-}
-
-.scrollable-container::-webkit-scrollbar-thumb:hover,
-.search-results::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.35) !important;
+  display: none; /* Hide scrollbar for Webkit browsers */
 }
 
 /* Enhanced Link Styles */
