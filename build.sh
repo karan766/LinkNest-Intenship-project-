@@ -9,16 +9,21 @@ echo "🚀 Starting LinkNest build process..."
 echo "📋 Node.js version: $(node --version)"
 echo "📋 NPM version: $(npm --version)"
 
+# Clean any existing node_modules and lock files to avoid conflicts
+echo "🧹 Cleaning existing dependencies..."
+rm -rf backend/node_modules backend/package-lock.json
+rm -rf frontend/node_modules frontend/package-lock.json
+
 # Install backend dependencies
 echo "📦 Installing backend dependencies..."
 cd backend
-npm ci --only=production
+npm install --only=production
 cd ..
 
 # Install frontend dependencies (including dev dependencies for build)
 echo "📦 Installing frontend dependencies..."
 cd frontend
-npm ci
+npm install
 cd ..
 
 # Build frontend
