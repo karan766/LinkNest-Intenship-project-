@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import io from "socket.io-client";
 import userAtom from "../atoms/userAtom";
+import config from "../config/env.js";
 
 const SocketContext = createContext();
 
@@ -15,10 +16,16 @@ export const SocketContextProvider = ({ children }) => {
 	const user = useRecoilValue(userAtom);
 
 	useEffect(() => {
-		const socket = io("/", {
+		const socketUrl = config.isProduction ? config.socketUrl : "/";
+		const socket = io(socketUrl, {
 			query: {
 				userId: user?._id,
 			},
+			transports: config.socketTransports || ['websocket', 'polling'],
+			timeout: config.socketTimeout || 20000,
+			reconnection: true,
+			reconnectionAttempts: config.socketReconnectionAttempts || 5,
+			reconnectionDelay: config.socketReconnectionDelay || 1000,
 		});
 
 		setSocket(socket);
@@ -26,6 +33,11 @@ export const SocketContextProvider = ({ children }) => {
 		socket.on("getOnlineUsers", (users) => {
 			setOnlineUsers(users);
 		});
+
+		socket.on("connect_error", (error) => {
+			console.error("Socket connection error:", error);
+		});
+
 		return () => socket && socket.close();
 	}, [user?._id]);
 

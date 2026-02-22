@@ -7,15 +7,78 @@ services:
     startCommand: npm start
     healthCheckPath: /health
     envVars:
+      # Core Environment
       - key: NODE_ENV
         value: production
+      - key: PORT
+        value: 10000
+      
+      # Database Configuration
       - key: MONGO_URI
         sync: false
+      
+      # Authentication
       - key: JWT_SECRET
         sync: false
+      
+      # Cloudinary Configuration
       - key: CLOUDINARY_CLOUD_NAME
         sync: false
       - key: CLOUDINARY_API_KEY
         sync: false
       - key: CLOUDINARY_API_SECRET
         sync: false
+      
+      # Render Deployment Specific
+      - key: CLIENT_URL
+        value: https://linknest-app.onrender.com
+      - key: RENDER_EXTERNAL_URL
+        value: https://linknest-app.onrender.com
+      
+      # CORS Configuration
+      - key: ALLOWED_ORIGINS
+        value: https://linknest-app.onrender.com
+      
+      # Session Configuration
+      - key: SESSION_SECRET
+        sync: false
+      - key: COOKIE_SECRET
+        sync: false
+      
+      # Rate Limiting
+      - key: RATE_LIMIT_WINDOW_MS
+        value: 900000
+      - key: RATE_LIMIT_MAX_REQUESTS
+        value: 100
+      
+      # File Upload Limits
+      - key: MAX_FILE_SIZE
+        value: 10485760
+      - key: ALLOWED_FILE_TYPES
+        value: image/jpeg,image/png,image/gif,image/webp
+      
+      # Security Headers
+      - key: ENABLE_HELMET
+        value: true
+      - key: ENABLE_CORS
+        value: true
+      - key: ENABLE_RATE_LIMITING
+        value: true
+      
+      # Logging
+      - key: LOG_LEVEL
+        value: info
+      - key: ENABLE_REQUEST_LOGGING
+        value: true
+      
+      # Health Check
+      - key: HEALTH_CHECK_ENABLED
+        value: true
+      
+      # Socket.IO Configuration
+      - key: SOCKET_CORS_ORIGIN
+        value: https://linknest-app.onrender.com
+      - key: SOCKET_PING_TIMEOUT
+        value: 60000
+      - key: SOCKET_PING_INTERVAL
+        value: 25000

@@ -22,4 +22,22 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment files
 .env
+.env.local
+.env.production.local
+.env.staging.local
+.env.development.local
+
+# Keep template files
+!.env.example
+!.env.development
+!.env.staging
+
+# Build analysis
+stats.html
+bundle-analyzer-report.html
+
+# Deployment
+deployment-info.json
