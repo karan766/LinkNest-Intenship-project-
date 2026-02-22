@@ -1,9 +1,4 @@
-import { Avatar } from "@chakra-ui/avatar";
-import { Image } from "@chakra-ui/image";
-import { Box, Flex, Text, VStack, HStack } from "@chakra-ui/layout";
-import { IconButton } from "@chakra-ui/button";
-import { Tooltip } from "@chakra-ui/tooltip";
-import { useColorModeValue } from "@chakra-ui/react";
+import { Avatar, Image, Box, Flex, Text, VStack, HStack, IconButton, Tooltip, useColorModeValue } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import Actions from "./Actions";
 import { useEffect, useState } from "react";
