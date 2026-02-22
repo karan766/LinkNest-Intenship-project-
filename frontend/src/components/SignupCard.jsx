@@ -94,7 +94,7 @@ export default function SignupCard() {
             </FormLabel>
             <Input
               type="text"
-              placeholder="John Doe"
+              placeholder="Enter your full name"
               onChange={(e) =>
                 setInputs({ ...inputs, name: e.target.value })
               }
@@ -117,7 +117,7 @@ export default function SignupCard() {
             </FormLabel>
             <Input
               type="text"
-              placeholder="johndoe"
+              placeholder="Choose a username"
               onChange={(e) =>
                 setInputs({ ...inputs, username: e.target.value })
               }
@@ -141,7 +141,7 @@ export default function SignupCard() {
           </FormLabel>
           <Input
             type="email"
-            placeholder="john@example.com"
+            placeholder="Enter your email address"
             onChange={(e) =>
               setInputs({ ...inputs, email: e.target.value })
             }

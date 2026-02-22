@@ -7,15 +7,15 @@ import { useState } from "react";
 const UserPost = ({ postImg, postTitle, likes, replies }) => {
 	const [liked, setLiked] = useState(false);
 	return (
-		<Link to={"/markzuckerberg/post/1"}>
+		<Link to={"/sampleuser/post/1"}>
 			<Flex gap={3} mb={4} py={5}>
 				<Flex flexDirection={"column"} alignItems={"center"}>
-					<Avatar size='md' name='Mark Zuckerberg' src='/zuck-avatar.png' />
+					<Avatar size='md' name='Sample User' src='/zuck-avatar.png' />
 					<Box w='1px' h={"full"} bg='gray.light' my={2}></Box>
 					<Box position={"relative"} w={"full"}>
 						<Avatar
 							size='xs'
-							name='John doe'
+							name='User 1'
 							src='https://bit.ly/dan-abramov'
 							position={"absolute"}
 							top={"0px"}
@@ -24,7 +24,7 @@ const UserPost = ({ postImg, postTitle, likes, replies }) => {
 						/>
 						<Avatar
 							size='xs'
-							name='John doe'
+							name='User 2'
 							src='https://bit.ly/sage-adebayo'
 							position={"absolute"}
 							bottom={"0px"}
@@ -33,7 +33,7 @@ const UserPost = ({ postImg, postTitle, likes, replies }) => {
 						/>
 						<Avatar
 							size='xs'
-							name='John doe'
+							name='User 3'
 							src='https://bit.ly/prosper-baba'
 							position={"absolute"}
 							bottom={"0px"}
@@ -46,7 +46,7 @@ const UserPost = ({ postImg, postTitle, likes, replies }) => {
 					<Flex justifyContent={"space-between"} w={"full"}>
 						<Flex w={"full"} alignItems={"center"}>
 							<Text fontSize={"sm"} fontWeight={"bold"}>
-								markzuckerberg
+								sampleuser
 							</Text>
 							<Image src='/verified.png' w={4} h={4} ml={1} />
 						</Flex>
