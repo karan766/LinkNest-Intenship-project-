@@ -123,12 +123,12 @@ const UserHeader = ({ user }) => {
         </Flex>
         <Flex gap={{ base: 2, md: 3 }} flexShrink={0}>
           <Box className="icon-container">
-            <BsInstagram size={{ base: 20, md: 24 }} cursor={"pointer"} />
+            <BsInstagram size={20} cursor={"pointer"} />
           </Box>
           <Box className="icon-container">
             <Menu>
               <MenuButton>
-                <CgMoreO size={{ base: 20, md: 24 }} cursor={"pointer"} />
+                <CgMoreO size={20} cursor={"pointer"} />
               </MenuButton>
               <Portal>
                 <MenuList bg={"gray.dark"}>

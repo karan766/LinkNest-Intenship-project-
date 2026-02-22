@@ -198,13 +198,36 @@ const getFeedPosts = async (req, res) => {
 			return res.status(404).json({ error: "User not found" });
 		}
 
+		// Get pagination parameters from query
+		const page = parseInt(req.query.page) || 1;
+		const limit = parseInt(req.query.limit) || 6; // Default to 6 posts per page
+		const skip = (page - 1) * limit;
+
 		// Use friends array instead of following for the feed
 		const friends = user.friends || [];
 
 		// Include the user's own posts along with posts from friends
-		const feedPosts = await Post.find({ postedBy: { $in: [...friends, userId] } }).sort({ createdAt: -1 });
+		const feedPosts = await Post.find({ postedBy: { $in: [...friends, userId] } })
+			.sort({ createdAt: -1 })
+			.skip(skip)
+			.limit(limit)
+			.populate('postedBy', 'username profilePic name');
+
+		// Get total count for pagination info
+		const totalPosts = await Post.countDocuments({ postedBy: { $in: [...friends, userId] } });
+		const totalPages = Math.ceil(totalPosts / limit);
+		const hasMore = page < totalPages;
 		
-		res.status(200).json(feedPosts);
+		res.status(200).json({
+			posts: feedPosts,
+			pagination: {
+				currentPage: page,
+				totalPages,
+				totalPosts,
+				hasMore,
+				limit
+			}
+		});
 	} catch (err) {
 		res.status(500).json({ error: err.message });
 	}

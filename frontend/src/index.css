@@ -261,26 +261,79 @@ body {
   box-shadow: var(--shadow-soft);
 }
 
-/* Enhanced Scrollbar */
+/* Enhanced Scrollbar - Thin & Subtle but Functional */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px; /* Slightly thicker for better usability */
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.05); /* More visible track */
+  border-radius: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 10px;
-  border: 2px solid transparent;
-  background-clip: content-box;
+  background: rgba(0, 0, 0, 0.2); /* More visible but still subtle */
+  border-radius: 8px;
+  border: none;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
-  background-clip: content-box;
+  background: rgba(0, 0, 0, 0.35); /* More noticeable on hover */
+}
+
+/* Dark mode scrollbar - Thin & Subtle but Functional */
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2); /* More visible for dark mode */
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35); /* More noticeable on hover */
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05); /* More visible track */
+}
+
+/* Hide scrollbars on desktop for cleaner look */
+@media (min-width: 768px) {
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .no-scrollbar::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+  }
+}
+
+/* Ensure scrollable containers work properly */
+.scrollable-container,
+.search-results {
+  overflow-y: auto !important;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) rgba(0, 0, 0, 0.05);
+}
+
+.scrollable-container::-webkit-scrollbar,
+.search-results::-webkit-scrollbar {
+  width: 6px !important;
+}
+
+.scrollable-container::-webkit-scrollbar-track,
+.search-results::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05) !important;
+  border-radius: 8px;
+}
+
+.scrollable-container::-webkit-scrollbar-thumb,
+.search-results::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2) !important;
+  border-radius: 8px;
+}
+
+.scrollable-container::-webkit-scrollbar-thumb:hover,
+.search-results::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.35) !important;
 }
 
 /* Enhanced Link Styles */

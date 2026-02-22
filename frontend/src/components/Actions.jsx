@@ -283,7 +283,7 @@ const Actions = ({ post }) => {
                 {likesData.length === 0 ? (
                   <Box textAlign="center" py={8}>
                     <VStack spacing={3}>
-                      <Icon as={FiHeart} size={32} color="gray.400" />
+                      <Icon as={FiHeart} boxSize={8} color="gray.400" />
                       <Text color="gray.500">No likes yet</Text>
                       <Text fontSize="sm" color="gray.400">
                         Be the first to like this post!
@@ -307,7 +307,7 @@ const Actions = ({ post }) => {
                             {person.name}
                           </Text>
                         </VStack>
-                        <Icon as={FiHeart} color="red.500" size={16} />
+                        <Icon as={FiHeart} color="red.500" boxSize={4} />
                       </HStack>
                       {index < likesData.length - 1 && <Divider />}
                     </Box>

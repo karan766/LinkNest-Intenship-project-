@@ -1,4 +1,4 @@
-import { Button, Flex, Link, useColorMode, Badge, Box, Avatar, Tooltip, useColorModeValue } from "@chakra-ui/react";
+import { Button, Flex, Link, useColorMode, Badge, Box, Avatar, Tooltip, useColorModeValue, Text } from "@chakra-ui/react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import userAtom from "../atoms/userAtom";
 import { RxAvatar } from "react-icons/rx";
@@ -53,22 +53,24 @@ const Header = () => {
     <Flex 
       justifyContent="space-between" 
       alignItems="center"
-      mt={{ base: 4, md: 6 }}
-      mb={{ base: 6, md: 8 }}
-      px={{ base: 2, sm: 4 }}
-      py={3}
+      mt={{ base: 2, md: 4 }}
+      mb={{ base: 4, md: 6 }}
+      mx={{ base: -2, sm: 0 }}
+      px={{ base: 3, sm: 4, md: 6 }}
+      py={{ base: 2, md: 3 }}
       bg={headerBg}
       backdropFilter="blur(20px)"
-      borderRadius="2xl"
+      borderRadius={{ base: "xl", md: "2xl" }}
       border="1px solid"
       borderColor={borderColor}
       boxShadow="0 8px 32px rgba(0, 0, 0, 0.1)"
       position="sticky"
-      top={4}
+      top={{ base: 2, md: 4 }}
       zIndex={100}
       className="animate-fade-in"
-      flexWrap={{ base: "wrap", md: "nowrap" }}
-      gap={{ base: 2, md: 0 }}
+      w="full"
+      maxW="100%"
+      overflowX="hidden"
     >
       {user && (
         <Link as={RouterLink} to="/" style={{ textDecoration: 'none' }}>
@@ -99,16 +101,16 @@ const Header = () => {
       )}
 
       {user && (
-        <Flex alignItems="center" gap={{ base: 2, md: 3 }} flexWrap="wrap">
+        <Flex alignItems="center" gap={{ base: 1, sm: 2, md: 3 }} flexWrap="nowrap" flexShrink={0}>
           <Tooltip label="Profile" placement="bottom">
             <Link as={RouterLink} to={`/${user.username}`}>
               <Box 
                 bg={iconBg}
                 backdropFilter="blur(10px)"
                 borderRadius="full"
-                p={{ base: 2, md: 3 }}
-                w={{ base: 10, md: 12 }}
-                h={{ base: 10, md: 12 }}
+                p={{ base: 1.5, sm: 2, md: 3 }}
+                w={{ base: 8, sm: 9, md: 12 }}
+                h={{ base: 8, sm: 9, md: 12 }}
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
@@ -120,9 +122,9 @@ const Header = () => {
                 }}
               >
                 {user.profilePic ? (
-                  <Avatar size={{ base: "xs", md: "sm" }} src={user.profilePic} name={user.name} />
+                  <Avatar size={{ base: "2xs", sm: "xs", md: "sm" }} src={user.profilePic} name={user.name} />
                 ) : (
-                  <RxAvatar size={{ base: 20, md: 24 }} />
+                  <RxAvatar size={16} />
                 )}
               </Box>
             </Link>
@@ -135,9 +137,9 @@ const Header = () => {
                   bg={iconBg}
                   backdropFilter="blur(10px)"
                   borderRadius="full"
-                  p={{ base: 2, md: 3 }}
-                  w={{ base: 10, md: 12 }}
-                  h={{ base: 10, md: 12 }}
+                  p={{ base: 1.5, sm: 2, md: 3 }}
+                  w={{ base: 8, sm: 9, md: 12 }}
+                  h={{ base: 8, sm: 9, md: 12 }}
                   display="flex"
                   alignItems="center"
                   justifyContent="center"
@@ -154,14 +156,14 @@ const Header = () => {
               {unreadCount > 0 && (
                 <Badge
                   position="absolute"
-                  top="-8px"
-                  right="-8px"
+                  top={{ base: "-4px", md: "-8px" }}
+                  right={{ base: "-4px", md: "-8px" }}
                   bg="red.500"
                   color="white"
-                  fontSize="xs"
+                  fontSize={{ base: "2xs", md: "xs" }}
                   borderRadius="full"
-                  w={6}
-                  h={6}
+                  w={{ base: 4, md: 6 }}
+                  h={{ base: 4, md: 6 }}
                   display="flex"
                   alignItems="center"
                   justifyContent="center"
@@ -175,39 +177,15 @@ const Header = () => {
             </Box>
           </Tooltip>
 
-          <Tooltip label="Friends" placement="bottom" display={{ base: "none", sm: "block" }}>
-            <Link as={RouterLink} to="/followers">
-              <Box 
-                bg={iconBg}
-                backdropFilter="blur(10px)"
-                borderRadius="full"
-                p={{ base: 2, md: 3 }}
-                w={{ base: 10, md: 12 }}
-                h={{ base: 10, md: 12 }}
-                display={{ base: "none", sm: "flex" }}
-                alignItems="center"
-                justifyContent="center"
-                transition="all 0.3s"
-                _hover={{
-                  bg: iconHoverBg,
-                  transform: "scale(1.05)",
-                  boxShadow: "0 8px 25px rgba(0, 0, 0, 0.15)",
-                }}
-              >
-                <FaUserFriends size={{ base: 18, md: 22 }} />
-              </Box>
-            </Link>
-          </Tooltip>
-
           <Tooltip label="Messages" placement="bottom">
             <Link as={RouterLink} to="/chat">
               <Box 
                 bg={iconBg}
                 backdropFilter="blur(10px)"
                 borderRadius="full"
-                p={{ base: 2, md: 3 }}
-                w={{ base: 10, md: 12 }}
-                h={{ base: 10, md: 12 }}
+                p={{ base: 1.5, sm: 2, md: 3 }}
+                w={{ base: 8, sm: 9, md: 12 }}
+                h={{ base: 8, sm: 9, md: 12 }}
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
@@ -218,7 +196,7 @@ const Header = () => {
                   boxShadow: "0 8px 25px rgba(0, 0, 0, 0.15)",
                 }}
               >
-                <BsFillChatQuoteFill size={{ base: 16, md: 20 }} />
+                <BsFillChatQuoteFill size={14} />
               </Box>
             </Link>
           </Tooltip>
@@ -229,9 +207,9 @@ const Header = () => {
                 bg={iconBg}
                 backdropFilter="blur(10px)"
                 borderRadius="full"
-                p={{ base: 2, md: 3 }}
-                w={{ base: 10, md: 12 }}
-                h={{ base: 10, md: 12 }}
+                p={{ base: 1.5, sm: 2, md: 3 }}
+                w={{ base: 8, sm: 9, md: 12 }}
+                h={{ base: 8, sm: 9, md: 12 }}
                 display={{ base: "none", md: "flex" }}
                 alignItems="center"
                 justifyContent="center"
@@ -242,14 +220,14 @@ const Header = () => {
                   boxShadow: "0 8px 25px rgba(0, 0, 0, 0.15)",
                 }}
               >
-                <MdOutlineSettings size={{ base: 18, md: 22 }} />
+                <MdOutlineSettings size={16} />
               </Box>
             </Link>
           </Tooltip>
 
           <Tooltip label="Logout" placement="bottom">
             <Button
-              size={{ base: "sm", md: "sm" }}
+              size={{ base: "xs", sm: "sm" }}
               onClick={logout}
               bg="red.500"
               color="white"
@@ -257,12 +235,15 @@ const Header = () => {
                 bg: "red.600",
                 transform: "scale(1.05)",
               }}
-              leftIcon={<FiLogOut size={16} />}
-              borderRadius="xl"
+              leftIcon={<FiLogOut size={12} />}
+              borderRadius={{ base: "lg", md: "xl" }}
               boxShadow="0 4px 15px rgba(239, 68, 68, 0.3)"
               transition="all 0.3s"
-              fontSize={{ base: "xs", md: "sm" }}
-              px={{ base: 3, md: 4 }}
+              fontSize={{ base: "2xs", sm: "xs", md: "sm" }}
+              px={{ base: 2, sm: 3, md: 4 }}
+              py={{ base: 1, sm: 2 }}
+              h={{ base: 7, sm: 8, md: 10 }}
+              minW={{ base: "auto", sm: "auto" }}
             >
               <Text display={{ base: "none", sm: "block" }}>Logout</Text>
             </Button>

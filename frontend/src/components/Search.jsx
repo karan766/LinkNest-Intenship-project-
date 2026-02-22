@@ -134,14 +134,16 @@ const Search = () => {
       <Box
         bg={cardBg}
         backdropFilter="blur(20px)"
-        borderRadius="2xl"
-        p={6}
+        borderRadius={{ base: "xl", md: "2xl" }}
+        p={{ base: 4, sm: 5, md: 6 }}
         border="1px solid"
         borderColor={borderColor}
         boxShadow="0 8px 32px rgba(0, 0, 0, 0.1)"
+        w="full"
+        maxW="100%"
       >
-        <VStack spacing={4} align="stretch">
-          <Text fontSize="lg" fontWeight="semibold" color="brand.500">
+        <VStack spacing={{ base: 3, md: 4 }} align="stretch">
+          <Text fontSize={{ base: "md", md: "lg" }} fontWeight="semibold" color="brand.500">
             🔍 Search Users
           </Text>
           
@@ -161,6 +163,8 @@ const Search = () => {
                 boxShadow: "0 0 0 1px var(--chakra-colors-brand-500)",
               }}
               color={textColor}
+              fontSize={{ base: "sm", md: "md" }}
+              h={{ base: 10, md: 12 }}
             />
           </InputGroup>
 
@@ -177,10 +181,16 @@ const Search = () => {
           )}
 
           {searchResults.length > 0 && (
-            <VStack spacing={3} align="stretch" maxH="300px" overflowY="auto">
+            <VStack 
+              spacing={2} 
+              align="stretch" 
+              maxH="300px"
+              overflowY="auto"
+              className="search-results"
+            >
               {searchResults.map((userData, index) => (
                 userData.username === user.username ? (
-                  <Box key={index} p={3} textAlign="center">
+                  <Box key={index} p={{ base: 2, md: 3 }} textAlign="center">
                     <Text fontSize="sm" color={secondaryTextColor}>
                       That's you! 👋
                     </Text>
@@ -188,54 +198,67 @@ const Search = () => {
                 ) : (
                   <Box
                     key={index}
-                    p={3}
-                    borderRadius="xl"
+                    p={{ base: 2, md: 3 }}
+                    borderRadius={{ base: "lg", md: "xl" }}
                     border="1px solid"
                     borderColor={borderColor}
                     _hover={{ bg: hoverBg }}
                     transition="all 0.2s"
                   >
-                    <HStack justify="space-between">
-                      <HStack spacing={3} flex={1}>
+                    <HStack justify="space-between" spacing={{ base: 2, md: 3 }}>
+                      <HStack spacing={{ base: 2, md: 3 }} flex={1} minW={0}>
                         <Avatar
-                          size="sm"
+                          size={{ base: "sm", md: "md" }}
                           src={userData.profilePic}
                           name={userData.name}
                           cursor="pointer"
                           onClick={() => showUserProfile(userData)}
                         />
-                        <VStack align="start" spacing={0} flex={1}>
+                        <VStack align="start" spacing={0} flex={1} minW={0}>
                           <Text
                             fontWeight="bold"
                             color={textColor}
                             cursor="pointer"
                             onClick={() => showUserProfile(userData)}
                             _hover={{ color: "brand.500" }}
+                            fontSize={{ base: "sm", md: "md" }}
+                            isTruncated
                           >
                             {userData.username}
                           </Text>
-                          <Text fontSize="xs" color={secondaryTextColor}>
+                          <Text fontSize={{ base: "xs", md: "sm" }} color={secondaryTextColor} isTruncated>
                             {userData.name}
                           </Text>
                         </VStack>
                       </HStack>
 
                       <Button
-                        size="sm"
+                        size={{ base: "xs", md: "sm" }}
                         {...getButtonProps(userData.status)}
                         onClick={() => handleUserAction(userData.id, index)}
+                        fontSize={{ base: "xs", md: "sm" }}
+                        px={{ base: 2, md: 3 }}
+                        flexShrink={0}
                       />
                     </HStack>
                   </Box>
                 )
               ))}
+              
+              {searchResults.length > 5 && (
+                <Box p={2} textAlign="center">
+                  <Text fontSize="xs" color={secondaryTextColor}>
+                    +{searchResults.length - 5} more results
+                  </Text>
+                </Box>
+              )}
             </VStack>
           )}
         </VStack>
       </Box>
 
       {/* User Profile Modal */}
-      <Modal isOpen={isOpen} onClose={onClose} size="md">
+      <Modal isOpen={isOpen} onClose={onClose} size={{ base: "full", sm: "md" }}>
         <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
         <ModalContent
           bg={cardBg}
@@ -243,38 +266,44 @@ const Search = () => {
           border="1px solid"
           borderColor={borderColor}
           boxShadow="0 20px 60px rgba(0, 0, 0, 0.2)"
+          mx={{ base: 2, sm: 4 }}
+          my={{ base: 4, sm: 8 }}
+          borderRadius={{ base: "xl", sm: "2xl" }}
         >
-          <ModalHeader color={textColor}>User Profile</ModalHeader>
+          <ModalHeader color={textColor} fontSize={{ base: "lg", md: "xl" }}>
+            User Profile
+          </ModalHeader>
           <ModalCloseButton />
-          <ModalBody pb={6}>
+          <ModalBody pb={6} px={{ base: 4, md: 6 }}>
             {selectedUser && (
               <VStack spacing={4} align="stretch">
-                <HStack justify="space-between">
-                  <VStack align="start" spacing={1}>
-                    <Text fontSize="2xl" fontWeight="bold" color={textColor}>
+                <HStack justify="space-between" flexWrap={{ base: "wrap", sm: "nowrap" }} gap={{ base: 3, sm: 0 }}>
+                  <VStack align="start" spacing={1} flex={1} minW={0}>
+                    <Text fontSize={{ base: "lg", md: "2xl" }} fontWeight="bold" color={textColor} isTruncated>
                       {selectedUser.username}
                     </Text>
-                    <Text fontSize="sm" color={secondaryTextColor}>
+                    <Text fontSize={{ base: "sm", md: "md" }} color={secondaryTextColor} isTruncated>
                       {selectedUser.name}
                     </Text>
                   </VStack>
                   <Avatar
-                    size="lg"
+                    size={{ base: "md", md: "lg" }}
                     src={selectedUser.profilePic}
                     name={selectedUser.name}
+                    flexShrink={0}
                   />
                 </HStack>
 
                 <Divider />
 
                 <HStack>
-                  <Badge colorScheme="blue" variant="subtle">
+                  <Badge colorScheme="blue" variant="subtle" fontSize={{ base: "xs", md: "sm" }}>
                     {selectedUser.followers} followers
                   </Badge>
                 </HStack>
 
                 <Box>
-                  <Text fontSize="sm" color={textColor}>
+                  <Text fontSize={{ base: "sm", md: "md" }} color={textColor}>
                     {selectedUser.bio || "No bio available"}
                   </Text>
                 </Box>
