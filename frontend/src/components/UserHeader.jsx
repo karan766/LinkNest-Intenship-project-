@@ -37,14 +37,16 @@ const UserHeader = ({ user }) => {
   };
 
   return (
-    <VStack gap={4} alignItems={"start"}>
-      <Flex justifyContent={"space-between"} w={"full"}>
-        <Box>
-          <Text fontSize={"2xl"} fontWeight={"bold"}>
+    <VStack gap={{ base: 3, md: 4 }} alignItems={"start"} w="full" maxW="100%" px={{ base: 2, md: 0 }}>
+      <Flex justifyContent={"space-between"} w={"full"} align="flex-start">
+        <Box flex={1} minW={0} pr={{ base: 3, md: 4 }}>
+          <Text fontSize={{ base: "lg", md: "xl", lg: "2xl" }} fontWeight={"bold"} isTruncated>
             {user.name}
           </Text>
-          <Flex gap={2} alignItems={"center"}>
-            <Text fontSize={"sm"}>{user.username}</Text>
+          <Flex gap={2} alignItems={"center"} mt={1}>
+            <Text fontSize={{ base: "xs", md: "sm" }} color="gray.500" isTruncated>
+              @{user.username}
+            </Text>
             <Text
               fontSize={"xs"}
               bg={"gray.dark"}
@@ -54,13 +56,13 @@ const UserHeader = ({ user }) => {
             ></Text>
           </Flex>
         </Box>
-        <Box>
+        <Box flexShrink={0}>
           {user.profilePic && (
             <Avatar
               name={user.name}
               src={user.profilePic}
               size={{
-                base: "md",
+                base: "lg",
                 md: "xl",
               }}
             />
@@ -70,7 +72,7 @@ const UserHeader = ({ user }) => {
               name={user.name}
               src="https://bit.ly/broken-link"
               size={{
-                base: "md",
+                base: "lg",
                 md: "xl",
               }}
             />
@@ -78,40 +80,55 @@ const UserHeader = ({ user }) => {
         </Box>
       </Flex>
 
-      <Text>{user.bio}</Text>
+      <Text fontSize={{ base: "sm", md: "md" }} color="gray.600" lineHeight="1.5" w="full">
+        {user.bio}
+      </Text>
 
-      {currentUser?._id === user._id && (
-        <Link as={RouterLink} to="/update">
-          <Button size={"sm"}>Update Profile</Button>
-        </Link>
-      )}
-      {currentUser?._id !== user._id && (
-        <Button size={"sm"} onClick={handleFollowUnfollow} isLoading={updating}>
-          {following ? "Unfollow" : "Follow"}
-        </Button>
-      )}
-      <Flex w={"full"} justifyContent={"space-between"}>
-        <Flex gap={2} alignItems={"center"}>
+      <Flex direction={{ base: "column", sm: "row" }} gap={{ base: 2, sm: 3 }} w="full">
+        {currentUser?._id === user._id && (
+          <Link as={RouterLink} to="/update">
+            <Button size={{ base: "sm", md: "md" }} colorScheme="blue" w={{ base: "full", sm: "auto" }}>
+              Update Profile
+            </Button>
+          </Link>
+        )}
+        {currentUser?._id !== user._id && (
+          <Button 
+            size={{ base: "sm", md: "md" }} 
+            onClick={handleFollowUnfollow} 
+            isLoading={updating}
+            colorScheme={following ? "red" : "blue"}
+            w={{ base: "full", sm: "auto" }}
+          >
+            {following ? "Unfollow" : "Follow"}
+          </Button>
+        )}
+      </Flex>
+      
+      <Flex w={"full"} justifyContent={"space-between"} align="center" flexWrap={{ base: "wrap", md: "nowrap" }} gap={{ base: 2, md: 0 }}>
+        <Flex gap={2} alignItems={"center"} flex={1} minW={0}>
           <Text 
             color={"gray.light"} 
             cursor="pointer"
             _hover={{ color: "#667eea", textDecoration: "underline" }}
             as={RouterLink}
             to={`/${user.username}/friends`}
+            fontSize={{ base: "sm", md: "md" }}
+            isTruncated
           >
             {user.friends?.length || 0} friends
           </Text>
           <Box w="1" h="1" bg={"gray.light"} borderRadius={"full"}></Box>
-          <Link color={"gray.light"}>LinkNest</Link>
+          <Link color={"gray.light"} fontSize={{ base: "sm", md: "md" }}>LinkNest</Link>
         </Flex>
-        <Flex>
+        <Flex gap={{ base: 2, md: 3 }} flexShrink={0}>
           <Box className="icon-container">
-            <BsInstagram size={24} cursor={"pointer"} />
+            <BsInstagram size={{ base: 20, md: 24 }} cursor={"pointer"} />
           </Box>
           <Box className="icon-container">
             <Menu>
               <MenuButton>
-                <CgMoreO size={24} cursor={"pointer"} />
+                <CgMoreO size={{ base: 20, md: 24 }} cursor={"pointer"} />
               </MenuButton>
               <Portal>
                 <MenuList bg={"gray.dark"}>
@@ -125,15 +142,15 @@ const UserHeader = ({ user }) => {
         </Flex>
       </Flex>
 
-      <Flex w={"full"}>
+      <Flex w={"full"} mt={{ base: 2, md: 3 }}>
         <Flex
           flex={1}
           borderBottom={"1.5px solid white"}
           justifyContent={"center"}
-          pb="3"
+          pb={{ base: 2, md: 3 }}
           cursor={"pointer"}
         >
-          <Text fontWeight={"bold"}> Posts</Text>
+          <Text fontWeight={"bold"} fontSize={{ base: "md", md: "lg" }}>Posts</Text>
         </Flex>
       </Flex>
     </VStack>

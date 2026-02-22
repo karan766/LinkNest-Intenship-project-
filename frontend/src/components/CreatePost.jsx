@@ -88,8 +88,8 @@ const CreatePost = () => {
 		<>
 			<Button
 				position={"fixed"}
-				bottom={10}
-				right={5}
+				bottom={{ base: 4, md: 10 }}
+				right={{ base: 4, md: 5 }}
 				bg={useColorModeValue("brand.500", "gray.dark")}
 				color={useColorModeValue("white", "gray.300")}
 				_hover={{
@@ -97,15 +97,19 @@ const CreatePost = () => {
 					transform: "scale(1.05)",
 				}}
 				onClick={onOpen}
-				size={{ base: "sm", sm: "md" }}
+				size={{ base: "md", sm: "lg" }}
 				className="shadow-medium"
 				borderRadius="full"
 				boxShadow="0 8px 25px rgba(102, 126, 234, 0.3)"
+				w={{ base: 12, md: 14 }}
+				h={{ base: 12, md: 14 }}
+				minW={{ base: 12, md: 14 }}
+				zIndex={1000}
 			>
 				<AddIcon />
 			</Button>
 
-			<Modal isOpen={isOpen} onClose={onClose}>
+			<Modal isOpen={isOpen} onClose={onClose} size={{ base: "full", sm: "md", md: "lg" }}>
 				<ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
 
 				<ModalContent 
@@ -114,33 +118,54 @@ const CreatePost = () => {
 					border="1px solid"
 					borderColor={useColorModeValue("rgba(255, 255, 255, 0.4)", "gray.600")}
 					boxShadow="0 20px 60px rgba(0, 0, 0, 0.2)"
+					mx={{ base: 2, sm: 4 }}
+					my={{ base: 4, sm: 8 }}
+					maxH={{ base: "90vh", sm: "80vh" }}
+					borderRadius={{ base: "xl", sm: "2xl" }}
 				>
-					<ModalHeader>Create Post</ModalHeader>
-					<ModalCloseButton />
-					<ModalBody pb={6}>
+					<ModalHeader fontSize={{ base: "lg", md: "xl" }} py={{ base: 3, md: 4 }}>
+						Create Post
+					</ModalHeader>
+					<ModalCloseButton size={{ base: "sm", md: "md" }} />
+					<ModalBody pb={{ base: 4, md: 6 }} px={{ base: 4, md: 6 }}>
 						<FormControl>
 							<Textarea
 								placeholder='Post content goes here..'
 								onChange={handleTextChange}
 								value={postText}
+								minH={{ base: "120px", md: "150px" }}
+								fontSize={{ base: "sm", md: "md" }}
+								resize="vertical"
 							/>
-							<Text fontSize='xs' fontWeight='bold' textAlign={"right"} m={"1"} 
+							<Text fontSize={{ base: "2xs", md: "xs" }} fontWeight='bold' textAlign={"right"} m={"1"} 
 								color={useColorModeValue("gray.600", "gray.400")}>
 								{remainingChar}/{MAX_CHAR}
 							</Text>
 
 							<Input type='file' hidden ref={imageRef} onChange={handleImageChange} />
 
-							<BsFillImageFill
-								style={{ marginLeft: "5px", cursor: "pointer" }}
-								size={16}
-								onClick={() => imageRef.current.click()}
-							/>
+							<Flex align="center" mt={2}>
+								<BsFillImageFill
+									style={{ marginLeft: "5px", cursor: "pointer" }}
+									size={18}
+									onClick={() => imageRef.current.click()}
+								/>
+								<Text ml={2} fontSize={{ base: "xs", md: "sm" }} color="gray.500">
+									Add image
+								</Text>
+							</Flex>
 						</FormControl>
 
 						{imgUrl && (
-							<Flex mt={5} w={"full"} position={"relative"}>
-								<Image src={imgUrl} alt='Selected img' />
+							<Flex mt={{ base: 3, md: 5 }} w={"full"} position={"relative"}>
+								<Image 
+									src={imgUrl} 
+									alt='Selected img' 
+									borderRadius={{ base: "md", md: "lg" }}
+									maxH={{ base: "200px", md: "300px" }}
+									w="full"
+									objectFit="cover"
+								/>
 								<CloseButton
 									onClick={() => {
 										setImgUrl("");
@@ -149,12 +174,13 @@ const CreatePost = () => {
 									position={"absolute"}
 									top={2}
 									right={2}
+									size={{ base: "sm", md: "md" }}
 								/>
 							</Flex>
 						)}
 					</ModalBody>
 
-					<ModalFooter>
+					<ModalFooter py={{ base: 3, md: 4 }} px={{ base: 4, md: 6 }}>
 						<Button 
 							bg="brand.500"
 							color="white"
@@ -162,6 +188,8 @@ const CreatePost = () => {
 							mr={3} 
 							onClick={handleCreatePost} 
 							isLoading={loading}
+							size={{ base: "sm", md: "md" }}
+							w={{ base: "full", sm: "auto" }}
 						>
 							Post
 						</Button>

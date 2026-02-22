@@ -358,6 +358,144 @@ body {
   }
 }
 
+/* Additional Mobile Fixes */
+html {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Prevent horizontal scrolling on mobile */
+@media (max-width: 767px) {
+  * {
+    max-width: 100vw;
+  }
+  
+  .chakra-container {
+    max-width: 100vw !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+  
+  .chakra-flex {
+    max-width: 100%;
+  }
+  
+  .chakra-box {
+    max-width: 100%;
+  }
+  
+  .chakra-vstack {
+    max-width: 100%;
+  }
+  
+  .chakra-text {
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+}
+
+/* Mobile-first responsive text */
+@media (max-width: 480px) {
+  .chakra-text {
+    font-size: 14px !important;
+  }
+  
+  .chakra-heading {
+    font-size: 18px !important;
+  }
+  
+  /* Ensure avatars don't get too large on mobile */
+  .chakra-avatar {
+    max-width: 80px;
+    max-height: 80px;
+  }
+  
+  /* Compact spacing for mobile */
+  .chakra-stack > * + * {
+    margin-top: 0.75rem !important;
+  }
+}
+
+/* Touch-friendly buttons on mobile */
+@media (hover: none) and (pointer: coarse) {
+  .chakra-button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  .chakra-icon-button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Profile page specific mobile fixes */
+@media (max-width: 767px) {
+  .profile-header {
+    padding: 12px 8px;
+  }
+  
+  .profile-avatar {
+    width: 64px !important;
+    height: 64px !important;
+  }
+  
+  .profile-name {
+    font-size: 18px !important;
+    line-height: 1.3;
+  }
+  
+  .profile-username {
+    font-size: 12px !important;
+  }
+  
+  .profile-bio {
+    font-size: 14px !important;
+    line-height: 1.4;
+  }
+  
+  .profile-stats {
+    font-size: 13px !important;
+  }
+}
+
+/* Ultra small screens (iPhone SE, etc.) */
+@media (max-width: 375px) {
+  .chakra-container {
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+  }
+  
+  .profile-header {
+    padding: 8px 4px;
+  }
+  
+  .profile-avatar {
+    width: 56px !important;
+    height: 56px !important;
+  }
+  
+  .profile-name {
+    font-size: 16px !important;
+  }
+  
+  .profile-username {
+    font-size: 11px !important;
+  }
+}
+
 /* Focus Styles for Accessibility */
 .focus-ring {
   @apply focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50;
