@@ -1,8 +1,9 @@
-import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
+import { Avatar, Box, Flex, Text, Icon } from "@chakra-ui/react";
 import { BsThreeDots } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import Actions from "./Actions";
 import { useState } from "react";
+import { MdVerified } from "react-icons/md";
 
 const UserPost = ({ postImg, postTitle, likes, replies }) => {
 	const [liked, setLiked] = useState(false);
@@ -44,11 +45,11 @@ const UserPost = ({ postImg, postTitle, likes, replies }) => {
 				</Flex>
 				<Flex flex={1} flexDirection={"column"} gap={2}>
 					<Flex justifyContent={"space-between"} w={"full"}>
-						<Flex w={"full"} alignItems={"center"}>
+						<Flex w={"full"} alignItems={"center"} gap={1}>
 							<Text fontSize={"sm"} fontWeight={"bold"}>
 								sampleuser
 							</Text>
-							<Image src='/verified.png' w={4} h={4} ml={1} />
+							<Icon as={MdVerified} w={4} h={4} color="blue.500" />
 						</Flex>
 						<Flex gap={4} alignItems={"center"}>
 							<Text fontStyle={"sm"} color={"gray.light"}>

@@ -9,10 +9,12 @@ import {
 	WrapItem,
 	useColorMode,
 	useColorModeValue,
+	Icon,
 } from "@chakra-ui/react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import userAtom from "../atoms/userAtom";
 import { BsCheck2All, BsFillImageFill } from "react-icons/bs";
+import { MdVerified } from "react-icons/md";
 import { selectedConversationAtom } from "../atoms/messagesAtom";
 
 const Conversation = ({ conversation, isOnline }) => {
@@ -64,8 +66,9 @@ const Conversation = ({ conversation, isOnline }) => {
 			</WrapItem>
 
 			<Stack direction={"column"} fontSize={"sm"}>
-				<Text fontWeight='700' display={"flex"} alignItems={"center"} color={textColor}>
-					{user.username} <Image src='/verified.png' w={4} h={4} ml={1} />
+				<Text fontWeight='700' display={"flex"} alignItems={"center"} gap={1} color={textColor}>
+					{user.username}
+					<Icon as={MdVerified} w={4} h={4} color="blue.500" />
 				</Text>
 				<Text fontSize={"xs"} display={"flex"} alignItems={"center"} gap={1} color={secondaryTextColor}>
 					{currentUser._id === lastMessage.sender ? (

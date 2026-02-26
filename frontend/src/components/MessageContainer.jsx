@@ -1,4 +1,4 @@
-import { Avatar, Divider, Flex, Image, Skeleton, SkeletonCircle, Text, useColorModeValue } from "@chakra-ui/react";
+import { Avatar, Divider, Flex, Image, Skeleton, SkeletonCircle, Text, useColorModeValue, Icon } from "@chakra-ui/react";
 import Message from "./Message";
 import MessageInput from "./MessageInput";
 import { useEffect, useRef, useState } from "react";
@@ -8,6 +8,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import userAtom from "../atoms/userAtom";
 import { useSocket } from "../context/SocketContext.jsx";
 import messageSound from "../assets/sounds/message.mp3";
+import { MdVerified } from "react-icons/md";
 const MessageContainer = () => {
 	const showToast = useShowToast();
 	const selectedConversation = useRecoilValue(selectedConversationAtom);
@@ -136,8 +137,9 @@ const MessageContainer = () => {
 			{/* Message header */}
 			<Flex w="full" h={12} alignItems="center" gap={2} mb={4}>
 				<Avatar src={selectedConversation.userProfilePic} size="sm" />
-				<Text display="flex" alignItems="center" fontWeight="semibold" color={textColor}>
-					{selectedConversation.username} <Image src='/verified.png' w={4} h={4} ml={1} />
+				<Text display="flex" alignItems="center" gap={1} fontWeight="semibold" color={textColor}>
+					{selectedConversation.username}
+					<Icon as={MdVerified} w={4} h={4} color="blue.500" />
 				</Text>
 			</Flex>
 

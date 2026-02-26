@@ -1,4 +1,4 @@
-import { Avatar, Image, Box, Flex, Text, VStack, HStack, IconButton, Tooltip, useColorModeValue } from "@chakra-ui/react";
+import { Avatar, Image, Box, Flex, Text, VStack, HStack, IconButton, Tooltip, useColorModeValue, Icon } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import Actions from "./Actions";
 import { useEffect, useState } from "react";
@@ -9,6 +9,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import userAtom from "../atoms/userAtom";
 import postsAtom from "../atoms/postsAtom";
 import { FiTrash2, FiMessageCircle } from "react-icons/fi";
+import { MdVerified } from "react-icons/md";
 
 const Post = ({ post, postedBy }) => {
   const [user, setUser] = useState(null);
@@ -186,7 +187,7 @@ const Post = ({ post, postedBy }) => {
                 >
                   {user?.username}
                 </Text>
-                <Image src="/verified.png" w={4} h={4} flexShrink={0} />
+                <Icon as={MdVerified} w={4} h={4} color="blue.500" flexShrink={0} />
               </HStack>
               
               <HStack spacing={2} flexShrink={0}>
