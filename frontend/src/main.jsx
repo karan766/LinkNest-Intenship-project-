@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
+import "./styles/responsive.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import { mode } from "@chakra-ui/theme-tools";
 import { extendTheme } from "@chakra-ui/react";

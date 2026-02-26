@@ -122,7 +122,13 @@ const Header = () => {
                 }}
               >
                 {user.profilePic ? (
-                  <Avatar size="2xs" src={user.profilePic} name={user.name} w="20px" h="20px" />
+                  <Avatar 
+                    size="2xs" 
+                    src={user.profilePic} 
+                    name={user.name} 
+                    w={{ base: "20px", sm: "20px", md: "24px" }} 
+                    h={{ base: "20px", sm: "20px", md: "24px" }}
+                  />
                 ) : (
                   <RxAvatar size={20} />
                 )}

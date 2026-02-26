@@ -402,3 +402,87 @@
     max-width: none !important;
   }
 }
+
+/* Mobile-specific improvements for LinkNest */
+@media (max-width: 767px) {
+  /* Ensure proper spacing on mobile */
+  .chakra-container {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  /* Fix navbar alignment on mobile */
+  .chakra-flex {
+    flex-wrap: nowrap !important;
+  }
+
+  /* Ensure search input is full width on mobile */
+  .chakra-input {
+    font-size: 0.875rem;
+  }
+
+  /* Better spacing for cards on mobile */
+  .chakra-box {
+    margin-bottom: 0.75rem;
+  }
+
+  /* Ensure avatars are properly sized */
+  .chakra-avatar {
+    min-width: 20px;
+    min-height: 20px;
+  }
+
+  /* Fix button sizing on mobile */
+  .chakra-button {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  /* Ensure proper text truncation */
+  .chakra-text {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+
+  /* Fix modal sizing on mobile */
+  .chakra-modal__content {
+    margin: 1rem;
+    max-height: calc(100vh - 2rem);
+  }
+
+  /* Better spacing for VStack on mobile */
+  .chakra-stack {
+    gap: 0.75rem !important;
+  }
+}
+
+/* Small mobile devices (< 480px) */
+@media (max-width: 479px) {
+  /* Even tighter spacing for very small screens */
+  .chakra-container {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+
+  /* Reduce font sizes slightly */
+  h1, .chakra-heading {
+    font-size: 1.25rem !important;
+  }
+
+  h2 {
+    font-size: 1.125rem !important;
+  }
+
+  /* Ensure buttons don't overflow */
+  .chakra-button {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.6rem;
+    white-space: nowrap;
+  }
+
+  /* Fix icon sizes */
+  .chakra-icon {
+    width: 1rem !important;
+    height: 1rem !important;
+  }
+}
