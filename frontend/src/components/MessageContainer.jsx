@@ -24,7 +24,7 @@ const MessageContainer = () => {
 	const textColor = useColorModeValue("gray.800", "gray.100");
 
 	useEffect(() => {
-		socket.on("newMessage", (message) => {
+		const handleNewMessage = (message) => {
 			if (selectedConversation._id === message.conversationId) {
 				setMessages((prev) => [...prev, message]);
 			}
@@ -50,21 +50,15 @@ const MessageContainer = () => {
 				});
 				return updatedConversations;
 			});
-		});
+		};
 
-		return () => socket.off("newMessage");
-	}, [socket, selectedConversation, setConversations]);
+		socket.on("newMessage", handleNewMessage);
+
+		return () => socket.off("newMessage", handleNewMessage);
+	}, [socket, selectedConversation._id, setConversations]); // Changed selectedConversation to selectedConversation._id
 
 	useEffect(() => {
-		const lastMessageIsFromOtherUser = messages.length && messages[messages.length - 1].sender !== currentUser._id;
-		if (lastMessageIsFromOtherUser) {
-			socket.emit("markMessagesAsSeen", {
-				conversationId: selectedConversation._id,
-				userId: selectedConversation.userId,
-			});
-		}
-
-		socket.on("messagesSeen", ({ conversationId }) => {
+		const handleMessagesSeen = ({ conversationId }) => {
 			if (selectedConversation._id === conversationId) {
 				setMessages((prev) => {
 					const updatedMessages = prev.map((message) => {
@@ -79,14 +73,28 @@ const MessageContainer = () => {
 					return updatedMessages;
 				});
 			}
-		});
-	}, [socket, currentUser._id, messages, selectedConversation]);
+		};
+
+		const lastMessageIsFromOtherUser = messages.length && messages[messages.length - 1].sender !== currentUser._id;
+		if (lastMessageIsFromOtherUser) {
+			socket.emit("markMessagesAsSeen", {
+				conversationId: selectedConversation._id,
+				userId: selectedConversation.userId,
+			});
+		}
+
+		socket.on("messagesSeen", handleMessagesSeen);
+
+		return () => socket.off("messagesSeen", handleMessagesSeen);
+	}, [socket, currentUser._id, messages.length, selectedConversation._id, selectedConversation.userId]); // Optimized dependencies
 
 	useEffect(() => {
 		messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
 	}, [messages]);
 
 	useEffect(() => {
+		let isMounted = true;
+
 		const getMessages = async () => {
 			setLoadingMessages(true);
 			setMessages([]);
@@ -95,18 +103,22 @@ const MessageContainer = () => {
 				const res = await fetch(`/api/messages/${selectedConversation.userId}`);
 				const data = await res.json();
 				if (data.error) {
-					showToast("Error", data.error, "error");
+					if (isMounted) showToast("Error", data.error, "error");
 					return;
 				}
-				setMessages(data);
+				if (isMounted) setMessages(data);
 			} catch (error) {
-				showToast("Error", error.message, "error");
+				if (isMounted) showToast("Error", error.message, "error");
 			} finally {
-				setLoadingMessages(false);
+				if (isMounted) setLoadingMessages(false);
 			}
 		};
 
 		getMessages();
+
+		return () => {
+			isMounted = false;
+		};
 	}, [selectedConversation.userId, selectedConversation.mock]); // Removed showToast from dependencies
 
 	return (

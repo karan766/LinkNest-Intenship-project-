@@ -41,6 +41,9 @@ const ChatPage = () => {
 	const showToast = useShowToast();
 	const { socket, onlineUsers } = useSocket();
 
+	// AbortController for cancelling requests
+	const [abortController, setAbortController] = useState(null);
+
 	// Color mode values
 	const cardBg = useColorModeValue("rgba(255, 255, 255, 0.8)", "rgba(0, 0, 0, 0.3)");
 	const borderColor = useColorModeValue("rgba(255, 255, 255, 0.4)", "rgba(255, 255, 255, 0.1)");
@@ -49,7 +52,7 @@ const ChatPage = () => {
 	const hoverBg = useColorModeValue("rgba(255, 255, 255, 0.9)", "rgba(255, 255, 255, 0.1)");
 
 	useEffect(() => {
-		socket?.on("messagesSeen", ({ conversationId }) => {
+		const handleMessagesSeen = ({ conversationId }) => {
 			setConversations((prev) => {
 				const updatedConversations = prev.map((conversation) => {
 					if (conversation._id === conversationId) {
@@ -65,23 +68,32 @@ const ChatPage = () => {
 				});
 				return updatedConversations;
 			});
-		});
+		};
+
+		socket?.on("messagesSeen", handleMessagesSeen);
+
+		// Cleanup function to remove listener
+		return () => {
+			socket?.off("messagesSeen", handleMessagesSeen);
+		};
 	}, [socket, setConversations]);
 
 	useEffect(() => {
+		let isMounted = true;
+		
 		const getConversations = async () => {
 			try {
 				const res = await fetch("/api/messages/conversations");
 				const data = await res.json();
 				if (data.error) {
-					showToast("Error", data.error, "error");
+					if (isMounted) showToast("Error", data.error, "error");
 					return;
 				}
-				setConversations(data);
+				if (isMounted) setConversations(data);
 			} catch (error) {
-				showToast("Error", error.message, "error");
+				if (isMounted) showToast("Error", error.message, "error");
 			} finally {
-				setLoadingConversations(false);
+				if (isMounted) setLoadingConversations(false);
 			}
 		};
 
@@ -96,26 +108,33 @@ const ChatPage = () => {
 				});
 				const data = await res.json();
 				if (data.error) {
-					showToast("Error", data.error, "error");
+					if (isMounted) showToast("Error", data.error, "error");
 					return;
 				}
-				setFriends(data);
+				if (isMounted) setFriends(data);
 			} catch (error) {
-				showToast("Error", error.message, "error");
+				if (isMounted) showToast("Error", error.message, "error");
 			} finally {
-				setLoadingFriends(false);
+				if (isMounted) setLoadingFriends(false);
 			}
 		};
 
 		getConversations();
 		getFriends();
-	}, [showToast, setConversations, currentUser._id]);
+
+		// Cleanup function
+		return () => {
+			isMounted = false;
+		};
+	}, [currentUser._id]); // Removed showToast and setConversations from dependencies
 
 	const handleSearch = (value) => {
 		setSearchText(value);
 		
+		// Clear previous timeout
 		if (window.searchTimeout) {
 			clearTimeout(window.searchTimeout);
+			window.searchTimeout = null;
 		}
 		
 		if (value.length >= 1) {
@@ -127,7 +146,25 @@ const ChatPage = () => {
 		}
 	};
 
+	// Cleanup search timeout on unmount
+	useEffect(() => {
+		return () => {
+			if (window.searchTimeout) {
+				clearTimeout(window.searchTimeout);
+				window.searchTimeout = null;
+			}
+		};
+	}, []);
+
 	const searchUsers = async (username) => {
+		// Cancel previous request if exists
+		if (abortController) {
+			abortController.abort();
+		}
+
+		const controller = new AbortController();
+		setAbortController(controller);
+
 		try {
 			setSearchingUser(true);
 			const res = await fetch("/api/users/Search", {
@@ -136,11 +173,14 @@ const ChatPage = () => {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({ username, user: currentUser }),
+				signal: controller.signal,
 			});
 			const data = await res.json();
 			setSearchResults(data || []);
 		} catch (error) {
-			showToast("Error", error.message, "error");
+			if (error.name !== 'AbortError') {
+				showToast("Error", error.message, "error");
+			}
 		} finally {
 			setSearchingUser(false);
 		}

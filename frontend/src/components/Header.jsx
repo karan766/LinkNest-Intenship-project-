@@ -108,9 +108,9 @@ const Header = () => {
                 bg={iconBg}
                 backdropFilter="blur(10px)"
                 borderRadius="full"
-                p={{ base: 1.5, sm: 2, md: 3 }}
-                w={{ base: 8, sm: 9, md: 12 }}
-                h={{ base: 8, sm: 9, md: 12 }}
+                p={{ base: 1, sm: 1.5, md: 2 }}
+                w={{ base: 7, sm: 8, md: 10 }}
+                h={{ base: 7, sm: 8, md: 10 }}
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
@@ -122,9 +122,9 @@ const Header = () => {
                 }}
               >
                 {user.profilePic ? (
-                  <Avatar size={{ base: "2xs", sm: "xs", md: "sm" }} src={user.profilePic} name={user.name} />
+                  <Avatar size="2xs" src={user.profilePic} name={user.name} w="20px" h="20px" />
                 ) : (
-                  <RxAvatar size={16} />
+                  <RxAvatar size={20} />
                 )}
               </Box>
             </Link>
@@ -137,9 +137,9 @@ const Header = () => {
                   bg={iconBg}
                   backdropFilter="blur(10px)"
                   borderRadius="full"
-                  p={{ base: 1.5, sm: 2, md: 3 }}
-                  w={{ base: 8, sm: 9, md: 12 }}
-                  h={{ base: 8, sm: 9, md: 12 }}
+                  p={{ base: 1, sm: 1.5, md: 2 }}
+                  w={{ base: 7, sm: 8, md: 10 }}
+                  h={{ base: 7, sm: 8, md: 10 }}
                   display="flex"
                   alignItems="center"
                   justifyContent="center"
@@ -150,20 +150,22 @@ const Header = () => {
                     boxShadow: "0 8px 25px rgba(0, 0, 0, 0.15)",
                   }}
                 >
-                  {colorMode === "dark" ? <WhiteBell /> : <BlackBell />}
+                  <Box w="20px" h="20px" display="flex" alignItems="center" justifyContent="center">
+                    {colorMode === "dark" ? <WhiteBell /> : <BlackBell />}
+                  </Box>
                 </Box>
               </Link>
               {unreadCount > 0 && (
                 <Badge
                   position="absolute"
-                  top={{ base: "-4px", md: "-8px" }}
-                  right={{ base: "-4px", md: "-8px" }}
+                  top={{ base: "-4px", md: "-6px" }}
+                  right={{ base: "-4px", md: "-6px" }}
                   bg="red.500"
                   color="white"
-                  fontSize={{ base: "2xs", md: "xs" }}
+                  fontSize="2xs"
                   borderRadius="full"
-                  w={{ base: 4, md: 6 }}
-                  h={{ base: 4, md: 6 }}
+                  w={{ base: 4, md: 5 }}
+                  h={{ base: 4, md: 5 }}
                   display="flex"
                   alignItems="center"
                   justifyContent="center"
@@ -183,9 +185,9 @@ const Header = () => {
                 bg={iconBg}
                 backdropFilter="blur(10px)"
                 borderRadius="full"
-                p={{ base: 1.5, sm: 2, md: 3 }}
-                w={{ base: 8, sm: 9, md: 12 }}
-                h={{ base: 8, sm: 9, md: 12 }}
+                p={{ base: 1, sm: 1.5, md: 2 }}
+                w={{ base: 7, sm: 8, md: 10 }}
+                h={{ base: 7, sm: 8, md: 10 }}
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
@@ -196,7 +198,7 @@ const Header = () => {
                   boxShadow: "0 8px 25px rgba(0, 0, 0, 0.15)",
                 }}
               >
-                <BsFillChatQuoteFill size={14} />
+                <BsFillChatQuoteFill size={20} />
               </Box>
             </Link>
           </Tooltip>
@@ -207,9 +209,9 @@ const Header = () => {
                 bg={iconBg}
                 backdropFilter="blur(10px)"
                 borderRadius="full"
-                p={{ base: 1.5, sm: 2, md: 3 }}
-                w={{ base: 8, sm: 9, md: 12 }}
-                h={{ base: 8, sm: 9, md: 12 }}
+                p={{ base: 1, sm: 1.5, md: 2 }}
+                w={{ base: 7, sm: 8, md: 10 }}
+                h={{ base: 7, sm: 8, md: 10 }}
                 display={{ base: "none", md: "flex" }}
                 alignItems="center"
                 justifyContent="center"
@@ -220,7 +222,7 @@ const Header = () => {
                   boxShadow: "0 8px 25px rgba(0, 0, 0, 0.15)",
                 }}
               >
-                <MdOutlineSettings size={16} />
+                <MdOutlineSettings size={20} />
               </Box>
             </Link>
           </Tooltip>
