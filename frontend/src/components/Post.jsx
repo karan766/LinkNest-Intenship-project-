@@ -170,8 +170,8 @@ const Post = ({ post, postedBy }) => {
           {/* Right Column - Content */}
           <VStack flex={1} align="stretch" spacing={{ base: 2, md: 3 }}>
             {/* Header */}
-            <Flex justify="space-between" align="center" flexWrap="wrap" gap={2}>
-              <HStack spacing={2} flex={1} minW={0}>
+            <Flex justify="space-between" align="center" flexWrap="nowrap" gap={{ base: 1, md: 2 }}>
+              <HStack spacing={1} flex={1} minW={0} overflow="hidden">
                 <Text
                   fontWeight="bold"
                   fontSize={{ base: "sm", md: "md" }}
@@ -184,26 +184,31 @@ const Post = ({ post, postedBy }) => {
                   _hover={{ color: "brand.500" }}
                   transition="colors 0.2s"
                   isTruncated
+                  noOfLines={1}
+                  maxW="100%"
                 >
                   {user?.username}
                 </Text>
                 <Icon as={MdVerified} w={4} h={4} color="blue.500" flexShrink={0} />
               </HStack>
               
-              <HStack spacing={2} flexShrink={0}>
-                <Text fontSize={{ base: "2xs", md: "xs" }} color="gray.500">
+              <HStack spacing={{ base: 1, md: 2 }} flexShrink={0} minW="fit-content">
+                <Text fontSize={{ base: "2xs", md: "xs" }} color="gray.500" whiteSpace="nowrap">
                   {formatDistanceToNow(new Date(post.createdAt))} ago
                 </Text>
                 
                 {currentUser?._id === user._id && (
                   <Tooltip label="Delete post">
                     <IconButton
-                      size={{ base: "xs", md: "sm" }}
+                      size="xs"
                       variant="ghost"
-                      icon={<FiTrash2 />}
+                      icon={<FiTrash2 size={14} />}
                       onClick={handleDeleteClick}
                       colorScheme="red"
                       className="hover-lift"
+                      minW="auto"
+                      h={{ base: 6, md: 8 }}
+                      w={{ base: 6, md: 8 }}
                     />
                   </Tooltip>
                 )}
@@ -228,14 +233,14 @@ const Post = ({ post, postedBy }) => {
                 border="1px solid"
                 borderColor={borderColor}
                 className="hover-glow"
-                maxH={{ base: "300px", md: "400px" }}
+                w="full"
               >
                 <Image 
                   src={post.img} 
                   w="full" 
-                  h="full"
-                  objectFit="cover"
+                  objectFit="contain"
                   loading="lazy"
+                  maxH={{ base: "500px", md: "600px" }}
                 />
               </Box>
             )}

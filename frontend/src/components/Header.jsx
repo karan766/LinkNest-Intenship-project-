@@ -55,9 +55,9 @@ const Header = () => {
       alignItems="center"
       mt={{ base: 2, md: 4 }}
       mb={{ base: 4, md: 6 }}
-      mx={{ base: -2, sm: 0 }}
-      px={{ base: 3, sm: 4, md: 6 }}
-      py={{ base: 2, md: 3 }}
+      mx={0}
+      px={{ base: 4, sm: 4, md: 6 }}
+      py={{ base: 2.5, md: 3 }}
       bg={headerBg}
       backdropFilter="blur(20px)"
       borderRadius={{ base: "xl", md: "2xl" }}

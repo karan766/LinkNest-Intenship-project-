@@ -6,6 +6,7 @@ import {
   Image,
   Spinner,
   Text,
+  Icon,
 } from "@chakra-ui/react";
 import Actions from "../components/Actions";
 import { useEffect } from "react";
@@ -18,6 +19,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import userAtom from "../atoms/userAtom";
 import { DeleteIcon } from "@chakra-ui/icons";
 import postsAtom from "../atoms/postsAtom";
+import { MdVerified } from "react-icons/md";
 
 const PostPage = () => {
   const { user, loading } = useGetUserProfile();
@@ -102,11 +104,11 @@ const PostPage = () => {
       <Flex>
         <Flex w={"full"} alignItems={"center"} gap={3}>
           <Avatar src={user.profilePic} size={"md"} name="?" />
-          <Flex>
+          <Flex alignItems="center" gap={1}>
             <Text fontSize={"sm"} fontWeight={"bold"}>
               {user.username}
             </Text>
-            <Image src="/verified.png" w="4" h={4} ml={4} />
+            <Icon as={MdVerified} w={4} h={4} color="blue.500" />
           </Flex>
         </Flex>
         <Flex gap={4} alignItems={"center"}>
