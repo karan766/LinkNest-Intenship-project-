@@ -975,6 +975,53 @@ const getUnreadNotificationCount = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+const updatePublicKey = async (req, res) => {
+  try {
+    const { publicKey } = req.body;
+    const userId = req.user._id;
+
+    if (!publicKey) {
+      return res.status(400).json({ error: "Public key is required" });
+    }
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { publicKey },
+      { new: true }
+    ).select("-password");
+
+    res.status(200).json({
+      success: true,
+      message: "Public key updated successfully",
+      publicKey: user.publicKey
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const getPublicKey = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    if (!userId) {
+      return res.status(400).json({ error: "User ID is required" });
+    }
+
+    const user = await User.findById(userId).select("publicKey username");
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json({
+      publicKey: user.publicKey,
+      username: user.username
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 export {
   signupUser,
@@ -1000,4 +1047,6 @@ export {
   markAllNotificationsAsRead,
   getUnreadNotificationCount,
   cleanupDuplicateFriends,
+  updatePublicKey,
+  getPublicKey,
 };

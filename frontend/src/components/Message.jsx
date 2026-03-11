@@ -3,24 +3,48 @@ import { selectedConversationAtom } from "../atoms/messagesAtom";
 import { useRecoilValue } from "recoil";
 import userAtom from "../atoms/userAtom";
 import { BsCheck2All } from "react-icons/bs";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { decryptMessage, getPrivateKey } from "../utils/encryption";
 
 const Message = ({ ownMessage, message }) => {
 	const selectedConversation = useRecoilValue(selectedConversationAtom);
 	const user = useRecoilValue(userAtom);
 	const [imgLoaded, setImgLoaded] = useState(false);
+	const [decryptedText, setDecryptedText] = useState(message.text);
 	
 	// Color mode values
 	const ownMessageBg = useColorModeValue("brand.500", "green.800");
 	const otherMessageBg = useColorModeValue("gray.200", "gray.600");
 	const otherMessageText = useColorModeValue("gray.800", "white");
+
+	useEffect(() => {
+		const decryptMessageText = async () => {
+			if (!message.text || !user) return;
+			
+			try {
+				const privateKey = getPrivateKey(user._id);
+				if (privateKey) {
+					const decrypted = await decryptMessage(message.text, privateKey);
+					setDecryptedText(decrypted);
+				} else {
+					// No private key, display as-is (might be unencrypted)
+					setDecryptedText(message.text);
+				}
+			} catch (error) {
+				// If decryption fails, message might be unencrypted
+				setDecryptedText(message.text);
+			}
+		};
+
+		decryptMessageText();
+	}, [message.text, user]);
 	return (
 		<>
 			{ownMessage ? (
 				<Flex gap={2} alignSelf={"flex-end"}>
 					{message.text && (
 						<Flex bg={ownMessageBg} maxW={"350px"} p={3} borderRadius={"xl"}>
-							<Text color={"white"}>{message.text}</Text>
+							<Text color={"white"}>{decryptedText}</Text>
 							<Box
 								alignSelf={"flex-end"}
 								ml={1}
@@ -66,7 +90,7 @@ const Message = ({ ownMessage, message }) => {
 
 					{message.text && (
 						<Text maxW={"350px"} bg={otherMessageBg} p={3} borderRadius={"xl"} color={otherMessageText}>
-							{message.text}
+							{decryptedText}
 						</Text>
 					)}
 					{message.img && !imgLoaded && (

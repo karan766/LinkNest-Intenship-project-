@@ -2,6 +2,7 @@ import userAtom from "../atoms/userAtom";
 import { useSetRecoilState } from "recoil";
 import useShowToast from "./useShowToast";
 import { useNavigate } from "react-router-dom";
+import { clearPrivateKey } from "../utils/encryption";
 
 const useLogout = () => {
 	const setUser = useSetRecoilState(userAtom);
@@ -10,11 +11,20 @@ const useLogout = () => {
 
 	const logout = async () => {
 		try {
+			// Get user ID before clearing state
+			const userStr = localStorage.getItem("user-threads");
+			const userId = userStr ? JSON.parse(userStr)._id : null;
+			
 			// Immediately clear user state to prevent UI issues
 			setUser(null);
 			
 			// Clear localStorage immediately
 			localStorage.removeItem("user-threads");
+			
+			// Clear encryption keys
+			if (userId) {
+				clearPrivateKey(userId);
+			}
 			
 			// Try to call logout API, but don't block on it
 			const logoutPromise = fetch("/api/users/logout", {

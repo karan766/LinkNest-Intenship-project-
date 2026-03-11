@@ -14,10 +14,14 @@ import { SettingsPage } from "./pages/SettingsPage";
 import NotificationPage from "./pages/NotificationPage"
 import FollowerPage from "./pages/FollowerPage";
 import FriendsPage from "./pages/FriendsPage";
+import useEncryption from "./hooks/useEncryption";
 
 function App() {
 	const user = useRecoilValue(userAtom);
 	const { pathname } = useLocation();
+	
+	// Initialize encryption for logged-in users
+	useEncryption();
 	return (
 		<Box position={"relative"} w='full' minH="100vh">
 			<Container 

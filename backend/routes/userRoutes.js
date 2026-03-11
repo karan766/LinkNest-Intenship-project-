@@ -24,6 +24,8 @@ import {
 	markAllNotificationsAsRead,
 	getUnreadNotificationCount,
 	cleanupDuplicateFriends,
+	updatePublicKey,
+	getPublicKey,
 } from "../controllers/userController.js";
 import protectRoute from "../middlewares/protectRoute.js";
 
@@ -54,5 +56,9 @@ router.get("/notifications", protectRoute, getNotifications);
 router.put("/notifications/:notificationId/read", protectRoute, markNotificationAsRead);
 router.put("/notifications/mark-all-read", protectRoute, markAllNotificationsAsRead);
 router.get("/notifications/unread-count", protectRoute, getUnreadNotificationCount);
+
+// Encryption routes
+router.put("/publickey", protectRoute, updatePublicKey);
+router.get("/publickey/:userId", getPublicKey);
 
 export default router;
