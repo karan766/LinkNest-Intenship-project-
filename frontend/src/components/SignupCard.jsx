@@ -61,6 +61,8 @@ export default function SignupCard() {
         return;
       }
 
+      // Set session start time
+      localStorage.setItem("session_start_time", Date.now().toString());
       localStorage.setItem("user-threads", JSON.stringify(data));
       setUser(data);
     } catch (error) {

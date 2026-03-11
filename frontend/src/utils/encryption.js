@@ -110,9 +110,27 @@ export async function encryptMessage(message, recipientPublicKeyString) {
   }
 }
 
+// Helper: Check if a string is base64 encoded (likely encrypted)
+function isBase64Encrypted(str) {
+  if (!str || str.length < 100) return false; // Encrypted messages are long
+  try {
+    // Check if it's valid base64 and doesn't contain normal text patterns
+    const base64Regex = /^[A-Za-z0-9+/]+=*$/;
+    return base64Regex.test(str) && str.length > 200;
+  } catch (e) {
+    return false;
+  }
+}
+
 // Decrypt a message using user's private key
 export async function decryptMessage(encryptedMessage, privateKeyString) {
   try {
+    // Check if message is actually encrypted
+    if (!isBase64Encrypted(encryptedMessage)) {
+      // Return as-is if not encrypted
+      return encryptedMessage;
+    }
+
     const privateKey = await importPrivateKey(privateKeyString);
     const encryptedBuffer = base64ToArrayBuffer(encryptedMessage);
     
@@ -128,7 +146,8 @@ export async function decryptMessage(encryptedMessage, privateKeyString) {
     return decryptedMessage;
   } catch (error) {
     console.error("Error decrypting message:", error);
-    return "[Encrypted Message - Unable to Decrypt]";
+    // Return original message if decryption fails (likely unencrypted)
+    return encryptedMessage;
   }
 }
 

@@ -20,6 +20,7 @@ const useLogout = () => {
 			
 			// Clear localStorage immediately
 			localStorage.removeItem("user-threads");
+			localStorage.removeItem("session_start_time");
 			
 			// Clear encryption keys
 			if (userId) {

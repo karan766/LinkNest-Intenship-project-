@@ -11,6 +11,7 @@ const Message = ({ ownMessage, message }) => {
 	const user = useRecoilValue(userAtom);
 	const [imgLoaded, setImgLoaded] = useState(false);
 	const [decryptedText, setDecryptedText] = useState(message.text);
+	const [isDecrypting, setIsDecrypting] = useState(false);
 	
 	// Color mode values
 	const ownMessageBg = useColorModeValue("brand.500", "green.800");
@@ -19,7 +20,12 @@ const Message = ({ ownMessage, message }) => {
 
 	useEffect(() => {
 		const decryptMessageText = async () => {
-			if (!message.text || !user) return;
+			if (!message.text || !user) {
+				setDecryptedText(message.text);
+				return;
+			}
+			
+			setIsDecrypting(true);
 			
 			try {
 				const privateKey = getPrivateKey(user._id);
@@ -27,12 +33,15 @@ const Message = ({ ownMessage, message }) => {
 					const decrypted = await decryptMessage(message.text, privateKey);
 					setDecryptedText(decrypted);
 				} else {
-					// No private key, display as-is (might be unencrypted)
+					// No private key, display as-is (unencrypted message)
 					setDecryptedText(message.text);
 				}
 			} catch (error) {
-				// If decryption fails, message might be unencrypted
+				console.error("Decryption error:", error);
+				// If decryption fails, show original (likely unencrypted)
 				setDecryptedText(message.text);
+			} finally {
+				setIsDecrypting(false);
 			}
 		};
 

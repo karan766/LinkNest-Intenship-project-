@@ -68,7 +68,8 @@ const MessageInput = ({ setMessages }) => {
 		setIsSending(true);
 
 		try {
-			let encryptedText = messageText;
+			let messageToSend = messageText;
+			let shouldEncrypt = false;
 			
 			// Try to encrypt the message if both users have encryption set up
 			if (messageText) {
@@ -82,7 +83,8 @@ const MessageInput = ({ setMessages }) => {
 					
 					// Only encrypt if both keys exist
 					if (recipientData.publicKey && privateKey) {
-						encryptedText = await encryptMessage(messageText, recipientData.publicKey);
+						messageToSend = await encryptMessage(messageText, recipientData.publicKey);
+						shouldEncrypt = true;
 					}
 				} catch (encError) {
 					console.log("Encryption not available, sending unencrypted:", encError.message);
@@ -96,7 +98,7 @@ const MessageInput = ({ setMessages }) => {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
-					message: encryptedText,
+					message: messageToSend,
 					recipientId: selectedConversation.userId,
 					img: imgUrl,
 				}),
@@ -107,9 +109,8 @@ const MessageInput = ({ setMessages }) => {
 				return;
 			}
 			
-			// Store the original unencrypted text for display
-			const displayMessage = { ...data, text: messageText };
-			setMessages((messages) => [...messages, displayMessage]);
+			// Add message to local state (will be decrypted by Message component if needed)
+			setMessages((messages) => [...messages, data]);
 
 			setConversations((prevConvs) => {
 				const updatedConversations = prevConvs.map((conversation) => {
@@ -117,7 +118,7 @@ const MessageInput = ({ setMessages }) => {
 						return {
 							...conversation,
 							lastMessage: {
-								text: messageText,
+								text: shouldEncrypt ? messageText : data.text,
 								sender: data.sender,
 							},
 						};

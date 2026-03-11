@@ -15,6 +15,7 @@ import NotificationPage from "./pages/NotificationPage"
 import FollowerPage from "./pages/FollowerPage";
 import FriendsPage from "./pages/FriendsPage";
 import useEncryption from "./hooks/useEncryption";
+import useSessionTimeout from "./hooks/useSessionTimeout";
 
 function App() {
 	const user = useRecoilValue(userAtom);
@@ -22,6 +23,9 @@ function App() {
 	
 	// Initialize encryption for logged-in users
 	useEncryption();
+	
+	// Initialize session timeout (12 hours)
+	useSessionTimeout();
 	return (
 		<Box position={"relative"} w='full' minH="100vh">
 			<Container 
